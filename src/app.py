@@ -1,164 +1,274 @@
-# app.py - Flask Backend for Emotion Detection Web App
-from flask import Flask, render_template, Response, jsonify
-import cv2
-import numpy as np
-from tensorflow.keras.models import load_model
-import base64
-from collections import deque
+# app.py - EmoteVision Flask Backend (optimized)
+#
+# Key improvements over original:
+#   - Flask-SocketIO replaces 500ms REST polling (true real-time push)
+#   - Single shared FrameBuffer thread eliminates camera read races
+#   - EmotionDetector (utils/detector.py) replaces duplicated pipeline
+#   - Session logging with CSV export endpoint
+#   - Real model accuracy read from model_meta.json
+#   - Proper error handling throughout
+#   - atexit camera cleanup
+#   - Config-driven host / port / debug
+
+from __future__ import annotations
+
+import atexit
+import csv
+import io
+import logging
+import sys
 import time
-import json
+from collections import deque
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from flask import Flask, Response, jsonify, make_response, render_template
+from flask_socketio import SocketIO
+
+import config
+from utils.detector import EmotionDetector, load_model_meta
+from utils.frame_buffer import FrameBuffer
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+log = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "emotevision-secret"
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 
-# Load model
-print("🚀 Loading AI Model...")
-model = load_model('model.h5')
-print("✅ Model Loaded!")
+# ── Global state ───────────────────────────────────────────────────────────────
+_detector: EmotionDetector | None = None
+_buffer:   FrameBuffer | None     = None
+_session_log: list[dict]          = []
+_prediction_times: deque          = deque(maxlen=60)
+_total_predictions: int           = 0
+_session_start: float             = time.time()
+_model_meta: dict                 = {}
+_cached_annotated: bytes | None   = None   # shared MJPEG frame from emit loop
+_cached_frame_lock                = __import__('threading').Lock()
+_detector_lock                    = __import__('threading').Lock()
 
-# Configuration
-labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Global variables for stats
-emotion_history = deque(maxlen=50)
-prediction_times = deque(maxlen=30)
-total_predictions = 0
-session_start = time.time()
+def get_detector() -> EmotionDetector:
+    global _detector
+    with _detector_lock:
+        if _detector is None:
+            log.info("Loading AI model…")
+            _detector = EmotionDetector(draw=True)
+            log.info("Model loaded.")
+    return _detector
 
-# Camera
-camera = None
 
-def get_camera():
-    global camera
-    if camera is None:
-        camera = cv2.VideoCapture(0)
-        camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    return camera
+def get_buffer() -> FrameBuffer:
+    global _buffer
+    if _buffer is None:
+        _buffer = FrameBuffer.get_instance()
+    return _buffer
 
-def detect_emotion(frame):
-    global total_predictions
-    
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5, minSize=(48, 48))
-    
-    result = {
-        'faces_detected': len(faces),
-        'emotions': [],
-        'frame_processed': True
-    }
-    
-    if len(faces) > 0:
-        for (x, y, w, h) in faces[:1]:  # Process first face only
-            # Extract face ROI
-            roi = gray[y:y+h, x:x+w]
-            roi_resized = cv2.resize(roi, (48, 48))
-            roi_normalized = np.expand_dims(np.expand_dims(roi_resized, -1), 0) / 255.0
-            
-            # Predict
-            start_time = time.time()
-            prediction = model.predict(roi_normalized, verbose=0)[0]
-            pred_time = (time.time() - start_time) * 1000
-            
-            prediction_times.append(pred_time)
-            total_predictions += 1
-            
-            # Get results
-            emotion_idx = int(np.argmax(prediction))
-            emotion = labels[emotion_idx]
-            confidence = float(prediction[emotion_idx] * 100)
-            
-            emotion_history.append(emotion_idx)
-            
-            # All probabilities
-            probabilities = {labels[i]: float(prediction[i] * 100) for i in range(7)}
-            
-            # Draw on frame
-            color = (0, 255, 0)
-            cv2.rectangle(frame, (x, y), (x+w, y+h), color, 2)
-            label_text = f"{emotion}: {confidence:.1f}%"
-            cv2.putText(frame, label_text, (x, y-10), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
-            
-            result['emotions'].append({
-                'emotion': emotion,
-                'confidence': confidence,
-                'probabilities': probabilities,
-                'bbox': {'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)},
-                'latency': pred_time
-            })
-    
-    return frame, result
 
-def generate_frames():
-    """Generate video frames with emotion detection"""
-    cam = get_camera()
-    
+# ── Cleanup ────────────────────────────────────────────────────────────────────
+@atexit.register
+def _cleanup():
+    global _buffer
+    if _buffer is not None:
+        _buffer.release()
+        log.info("Camera released on exit.")
+
+
+# ── SocketIO background broadcaster ───────────────────────────────────────────
+def _emit_loop():
+    """Background thread: grab frames, run detection, push to all WS clients.
+    Also caches the annotated JPEG bytes so _generate_mjpeg() never re-infers.
+    """
+    global _total_predictions, _cached_annotated
+    import cv2 as _cv2
+    detector = get_detector()
+    buf = get_buffer()
+
     while True:
-        success, frame = cam.read()
-        if not success:
-            break
-        
-        # Detect emotion
-        processed_frame, _ = detect_emotion(frame)
-        
-        # Encode frame
-        ret, buffer = cv2.imencode('.jpg', processed_frame)
-        frame_bytes = buffer.tobytes()
-        
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+        frame = buf.get_frame()
+        if frame is None:
+            socketio.sleep(0.033)
+            continue
 
-@app.route('/')
+        annotated, result = detector.detect(frame)
+
+        # Cache the annotated frame for the MJPEG stream (avoids double inference)
+        ok, enc = _cv2.imencode(".jpg", annotated, [_cv2.IMWRITE_JPEG_QUALITY, 80])
+        if ok:
+            with _cached_frame_lock:
+                _cached_annotated = enc.tobytes()
+
+        if result["emotions"]:
+            _total_predictions += 1
+            em = result["emotions"][0]
+            _prediction_times.append(em["latency"])
+
+            _session_log.append({
+                "timestamp":  round(time.time(), 3),
+                "emotion":    em["emotion"],
+                "confidence": round(em["confidence"], 2),
+                "latency_ms": round(em["latency"], 2),
+            })
+
+            socketio.emit("emotion_update", {
+                "emotion":           em["emotion"],
+                "confidence":        em["confidence"],
+                "probabilities":     em["probabilities"],
+                "smoothed_probs":    result["smoothed_probs"],
+                "engagement":        result["engagement"],
+                "latency":           em["latency"],
+                "faces_detected":    result["faces_detected"],
+                "total_predictions": _total_predictions,
+                "uptime":            int(time.time() - _session_start),
+            })
+        else:
+            socketio.emit("emotion_update", {
+                "emotion":           None,
+                "faces_detected":    0,
+                "uptime":            int(time.time() - _session_start),
+                "total_predictions": _total_predictions,
+            })
+
+        socketio.sleep(0.05)   # ~20 updates/sec
+
+
+socketio.start_background_task(_emit_loop)
+
+
+# ── MJPEG stream — serves cached annotated frames from _emit_loop ─────────────
+def _generate_mjpeg():
+    """Yield MJPEG frames. Uses frames annotated by _emit_loop (zero extra inference)."""
+    import cv2 as _cv2
+    import numpy as _np
+
+    placeholder = _np.zeros((480, 640, 3), dtype=_np.uint8)
+    _cv2.putText(placeholder, "Camera unavailable", (120, 240),
+                 _cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 212, 255), 2)
+    _, _ph = _cv2.imencode(".jpg", placeholder)
+    placeholder_bytes = _ph.tobytes()
+
+    while True:
+        with _cached_frame_lock:
+            jpg = _cached_annotated
+        yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n"
+               + (jpg if jpg is not None else placeholder_bytes)
+               + b"\r\n")
+        time.sleep(0.04)  # cap stream at 25 fps max
+
+
+# ── Routes ─────────────────────────────────────────────────────────────────────
+
+@app.route("/")
 def index():
-    """Main page"""
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/video_feed')
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/video_feed")
 def video_feed():
-    """Video streaming route"""
-    return Response(generate_frames(),
-                   mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(
+        _generate_mjpeg(),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
+    )
 
-@app.route('/api/predict', methods=['GET'])
+
+@app.route("/api/predict")
 def predict():
-    """Get current prediction and stats"""
-    cam = get_camera()
-    success, frame = cam.read()
-    
-    if not success:
-        return jsonify({'error': 'Camera not available'}), 500
-    
-    _, result = detect_emotion(frame)
-    
-    # Add statistics
-    result['stats'] = {
-        'total_predictions': total_predictions,
-        'avg_latency': sum(prediction_times) / len(prediction_times) if prediction_times else 0,
-        'uptime': int(time.time() - session_start),
-        'emotion_history': [labels[i] for i in list(emotion_history)[-10:]]
+    """Snapshot prediction for external REST consumers."""
+    frame = get_buffer().get_frame()
+    if frame is None:
+        return jsonify({"error": "Camera not available"}), 503
+
+    _, result = get_detector().detect(frame.copy())
+    result["stats"] = {
+        "total_predictions": _total_predictions,
+        "avg_latency": round(sum(_prediction_times) / len(_prediction_times), 2)
+        if _prediction_times else 0,
+        "uptime": int(time.time() - _session_start),
     }
-    
     return jsonify(result)
 
-@app.route('/api/stats', methods=['GET'])
+
+@app.route("/api/stats")
 def get_stats():
-    """Get system statistics"""
+    meta = _model_meta or load_model_meta()
     return jsonify({
-        'total_predictions': total_predictions,
-        'avg_latency': sum(prediction_times) / len(prediction_times) if prediction_times else 0,
-        'uptime': int(time.time() - session_start),
-        'model_accuracy': 70.01,
-        'emotions_count': len(labels),
-        'recent_emotions': [labels[i] for i in list(emotion_history)[-20:]]
+        "total_predictions": _total_predictions,
+        "avg_latency": round(sum(_prediction_times) / len(_prediction_times), 2)
+        if _prediction_times else 0,
+        "uptime": int(time.time() - _session_start),
+        "model_accuracy": meta.get("val_accuracy"),
+        "model_trained_at": meta.get("timestamp"),
+        "emotions_count": len(config.LABELS),
     })
 
-@app.route('/about')
-def about():
-    """About page"""
-    return render_template('about.html')
 
-if __name__ == '__main__':
-    print("🌐 Starting Flask Web Server...")
-    print("📱 Open browser at: http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+@app.route("/api/config")
+def get_config():
+    """Serve shared colour/label config to the frontend."""
+    return jsonify({
+        "labels":         config.LABELS,
+        "emotion_colors": config.EMOTION_COLORS,
+    })
+
+
+@app.route("/api/session/export")
+def session_export():
+    """Download current session as CSV."""
+    if not _session_log:
+        return jsonify({"error": "No session data yet"}), 404
+
+    output = io.StringIO()
+    writer = csv.DictWriter(
+        output, fieldnames=["timestamp", "emotion", "confidence", "latency_ms"]
+    )
+    writer.writeheader()
+    writer.writerows(_session_log)
+
+    resp = make_response(output.getvalue())
+    resp.headers["Content-Disposition"] = "attachment; filename=emotevision_session.csv"
+    resp.headers["Content-Type"] = "text/csv"
+    return resp
+
+
+@app.route("/api/session/reset", methods=["POST"])
+def session_reset():
+    global _session_log, _total_predictions, _session_start
+    _session_log = []
+    _total_predictions = 0
+    _session_start = time.time()
+    get_detector().reset_smoothing()
+    return jsonify({"status": "ok"})
+
+
+# ── SocketIO events ────────────────────────────────────────────────────────────
+
+@socketio.on("connect")
+def on_connect():
+    log.info("WS client connected")
+
+
+@socketio.on("disconnect")
+def on_disconnect():
+    log.info("WS client disconnected")
+
+
+# ── Entry point ────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    log.info("Starting EmoteVision on http://%s:%d", config.HOST, config.PORT)
+    try:
+        get_buffer()
+        get_detector()
+        _model_meta = load_model_meta()
+    except Exception as exc:
+        log.error("Startup failed: %s", exc)
+        import sys; sys.exit(1)
+
+    socketio.run(app, host=config.HOST, port=config.PORT, debug=config.DEBUG)

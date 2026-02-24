@@ -1,123 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Emotion Detection System</title>
+    <title>EmoteVision — AI Emotion Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">🎭 AI Emotion Detector</h1>
-            <nav>
-                <a href="/" class="nav-link active">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="https://github.com/devansh-tg/emojify--copy-" target="_blank" class="nav-link">GitHub</a>
-            </nav>
+
+<!--  Particle canvas (neural network background)  -->
+<canvas id="particle-canvas"></canvas>
+
+<!--  Ambient colour blobs  -->
+<div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
+
+<!-- Subtle grid overlay for depth perception -->
+<div style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.025;
+  background-image:linear-gradient(rgba(0,212,255,0.15) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,212,255,0.15) 1px,transparent 1px);
+  background-size:80px 80px;" aria-hidden="true"></div>
+
+<div class="page-wrapper">
+
+<!-- 
+     HEADER
+      -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">🎭 EmoteVision</h1>
+        <nav>
+            <a href="/" class="nav-link active">Home</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="https://github.com/devansh-tg/emojify--copy-" target="_blank" class="nav-link">GitHub</a>
+        </nav>
+        <div class="header-actions">
+            <button class="action-btn" id="export-btn" title="Export session as CSV">⬇ Export</button>
+            <button class="action-btn secondary" id="reset-btn" title="Reset session data">↺ Reset</button>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle theme" aria-label="Toggle dark/light theme">🌙</button>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Title Section -->
-            <div class="title-section">
-                <h2 class="page-title">Real-Time Emotion Detection</h2>
-                <p class="subtitle">Advanced AI-powered facial emotion recognition using Deep Learning</p>
-            </div>
+<!-- 
+     MAIN CONTENT
+      -->
+<main class="main-content">
+    <div class="container">
 
-            <!-- Main Grid -->
-            <div class="grid">
-                <!-- Video Feed -->
-                <div class="card video-card">
-                    <div class="card-header">
-                        <h3>📹 Live Camera Feed</h3>
-                        <span class="status-badge" id="status">● ACTIVE</span>
-                    </div>
-                    <div class="video-container">
-                        <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
-                    </div>
-                </div>
+        <!-- Title -->
+        <div class="title-section">
+            <h2 class="page-title">Real-Time Emotion Detection</h2>
+            <p class="subtitle">Advanced AI-powered facial recognition using Deep Learning &amp; WebSockets — live, private, in-browser</p>
+        </div>
 
-                <!-- Emotion Display -->
-                <div class="card emotion-card">
-                    <div class="card-header">
-                        <h3>🎭 Detected Emotion</h3>
-                    </div>
-                    <div class="emotion-display">
-                        <div class="emoji-container">
-                            <span class="emoji" id="emoji">😐</span>
-                        </div>
-                        <h2 class="emotion-name" id="emotion-name">Neutral</h2>
-                        <div class="confidence-container">
-                            <div class="confidence-bar">
-                                <div class="confidence-fill" id="confidence-fill"></div>
-                            </div>
-                            <p class="confidence-text" id="confidence-text">0.0%</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!--  Main Grid: video + emotion  -->
+        <div class="grid">
 
-            <!-- Statistics Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-value" id="latency">0ms</div>
-                    <div class="stat-label">Inference Time</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👤</div>
-                    <div class="stat-value" id="faces">0</div>
-                    <div class="stat-label">Faces Detected</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-value" id="total-predictions">0</div>
-                    <div class="stat-label">Total Predictions</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-value" id="uptime">0s</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-            </div>
-
-            <!-- Probabilities Chart -->
-            <div class="card probabilities-card">
+            <!-- Video feed -->
+            <div class="card video-card">
                 <div class="card-header">
-                    <h3>🧠 Neural Network Analysis</h3>
+                    <h3>📹 Live Camera Feed</h3>
+                    <span class="status-badge" id="status">● CONNECTING…</span>
                 </div>
-                <div class="probabilities-container" id="probabilities">
-                    <!-- Will be populated by JavaScript -->
+                <div class="video-wrapper">
+                    <!-- Tactical corner brackets -->
+                    <div class="video-corners" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Live webcam feed with emotion overlay">
                 </div>
             </div>
 
-            <!-- Emotion History -->
-            <div class="card history-card">
+            <!-- Emotion display -->
+            <div class="card emotion-card">
                 <div class="card-header">
-                    <h3>📈 Emotion History</h3>
+                    <h3>🎭 Detected Emotion</h3>
                 </div>
-                <div class="history-container">
-                    <div class="history-timeline" id="history-timeline">
-                        <!-- Will be populated by JavaScript -->
+                <div class="emotion-display">
+                    <!-- 3D orbiting emoji -->
+                    <div class="emoji-orb" id="emoji-orb">
+                        <div class="emoji-orb-ring"></div>
+                        <div class="emoji-orb-ring-2"></div>
+                        <div class="emoji-bg"></div>
+                        <!-- Inner glow pulse -->
+                        <div style="position:absolute;inset:30%;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.08),transparent);animation:pulse 3s ease-in-out infinite;" aria-hidden="true"></div>
+                        <span class="emoji" id="emoji">😐</span>
+                    </div>
+
+                    <h2 class="emotion-name" id="emotion-name">Waiting…</h2>
+
+                    <div class="confidence-container">
+                        <div class="conf-label">
+                            <span>CONFIDENCE</span>
+                            <span id="confidence-text">—</span>
+                        </div>
+                        <div class="conf-track">
+                            <div class="conf-fill" id="confidence-fill"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 AI Emotion Detection System | Built with TensorFlow & Flask</p>
-            <p>Model Accuracy: 70.01% | Trained on 35,000+ images</p>
+        <!--  Stats Grid  -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value" id="latency">—</div>
+                <div class="stat-label">Inference Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-value" id="faces">0</div>
+                <div class="stat-label">Faces Detected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="total-predictions">0</div>
+                <div class="stat-label">Total Predictions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-value" id="uptime">0s</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <!-- Engagement gauge -->
+            <div class="stat-card engagement-card">
+                <div class="stat-icon">💡</div>
+                <div class="engagement-gauge-wrap">
+                    <svg class="engagement-gauge" viewBox="0 0 120 70" role="img" aria-label="Engagement gauge">
+                        <path class="gauge-track" d="M10 60 A50 50 0 0 1 110 60"/>
+                        <path class="gauge-fill" id="gauge-fill" d="M10 60 A50 50 0 0 1 110 60"
+                              stroke-dasharray="157" stroke-dashoffset="157"/>
+                    </svg>
+                    <div class="stat-value engagement-value" id="engagement">50</div>
+                </div>
+                <div class="stat-label">Engagement Score</div>
+            </div>
         </div>
-    </footer>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <!--  Probability Bars  -->
+        <div class="card probabilities-card">
+            <div class="card-header">
+                <h3>🧠 Neural Network Analysis</h3>
+                <span class="ws-badge" id="ws-badge">⚡ Live</span>
+            </div>
+            <div class="probabilities-container" id="probabilities">
+                <!-- Populated dynamically by script.js -->
+            </div>
+        </div>
+
+        <!--  Trend Chart  -->
+        <div class="card history-card">
+            <div class="card-header">
+                <h3>📈 Emotion Trend (last 30 s)</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="trend-chart" aria-label="Live emotion probability chart"></canvas>
+            </div>
+        </div>
+
+    </div><!-- /.container -->
+</main>
+
+<!-- 
+     FOOTER
+      -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 EmoteVision | Built with TensorFlow, Flask-SocketIO &amp; Chart.js</p>
+        <p id="footer-accuracy">Model Accuracy: — | Trained on 35,000+ images</p>
+    </div>
+</footer>
+
+<style>
+@keyframes pulse { 0%,100%{opacity:0.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }
+</style>
+
+</div><!-- /.page-wrapper -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

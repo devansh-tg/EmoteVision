@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - AI Emotion Detection</title>
+    <title>About — EmoteVision</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- Particle canvas (neural network background) -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Ambient colour blobs -->
+<div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
+
+<div class="page-wrapper">
+
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <h1 class="logo">🎭 AI Emotion Detector</h1>
+            <h1 class="logo">🎭 EmoteVision</h1>
             <nav>
                 <a href="/" class="nav-link">Home</a>
                 <a href="/about" class="nav-link active">About</a>
@@ -34,11 +48,13 @@
                 <div class="card about-card">
                     <h3>🧠 Technology Stack</h3>
                     <ul class="tech-list">
-                        <li><strong>Backend:</strong> Flask (Python Web Framework)</li>
-                        <li><strong>Deep Learning:</strong> TensorFlow / Keras</li>
+                        <li><strong>Backend:</strong> Flask + Flask-SocketIO (Python)</li>
+                        <li><strong>Real-time Transport:</strong> WebSocket via Socket.IO (replaces HTTP polling)</li>
+                        <li><strong>Deep Learning:</strong> TensorFlow / Keras + optional TFLite runtime</li>
+                        <li><strong>Face Detection:</strong> MediaPipe BlazeFace (preferred) with Haar Cascade fallback</li>
                         <li><strong>Computer Vision:</strong> OpenCV</li>
-                        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
-                        <li><strong>Model:</strong> Convolutional Neural Network (CNN)</li>
+                        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript + Chart.js for live trend charts</li>
+                        <li><strong>Model:</strong> Custom CNN (4 convolutional blocks)</li>
                     </ul>
                 </div>
 
@@ -46,7 +62,7 @@
                     <h3>📊 Model Architecture</h3>
                     <ul class="tech-list">
                         <li><strong>Input:</strong> 48x48 grayscale images</li>
-                        <li><strong>Architecture:</strong> 3 Convolutional blocks with BatchNormalization</li>
+                        <li><strong>Architecture:</strong> 4 Convolutional blocks with BatchNormalization</li>
                         <li><strong>Parameters:</strong> ~2.7
                              million trainable parameters</li>
                         <li><strong>Training:</strong> 150 epochs with early stopping</li>
@@ -59,24 +75,28 @@
                 <div class="card about-card">
                     <h3>✨ Features</h3>
                     <ul class="tech-list">
-                        <li>Real-time emotion detection from webcam</li>
-                        <li>Live probability distribution for all emotions</li>
-                        <li>Performance metrics (inference time, FPS)</li>
-                        <li>Emotion history tracking</li>
-                        <li>Responsive web interface</li>
-                        <li>REST API for integration</li>
+                        <li>Real-time emotion detection via WebSocket push (no polling)</li>
+                        <li>Multi-face detection — all faces processed per frame</li>
+                        <li>Live Chart.js trend graph — 7-class probability over 60 seconds</li>
+                        <li>Engagement Score — weighted metric combining all emotion signals</li>
+                        <li>EWA temporal smoothing — eliminates emotion flicker between frames</li>
+                        <li>Session export — download emotion log as CSV</li>
+                        <li>Dark / Light theme toggle with localStorage persistence</li>
+                        <li>REST API endpoints for external integrations</li>
+                        <li>TFLite runtime support for 3-5× faster CPU inference</li>
                     </ul>
                 </div>
 
                 <div class="card about-card">
                     <h3>🚀 How It Works</h3>
                     <ol class="tech-list">
-                        <li>Camera captures real-time video feed</li>
-                        <li>Haar Cascade detects faces in each frame</li>
-                        <li>Face region is extracted and preprocessed (48x48 grayscale)</li>
-                        <li>CNN model predicts emotion probabilities</li>
-                        <li>Results are displayed with confidence scores</li>
-                        <li>System updates statistics and history</li>
+                        <li>A background thread continuously reads frames from the camera into a shared FrameBuffer</li>
+                        <li>MediaPipe BlazeFace (or Haar Cascade fallback) detects all faces per frame</li>
+                        <li>Each face ROI is extracted, resized to 48×48 grayscale, and normalised</li>
+                        <li>CNN (or TFLite) model predicts a 7-class probability vector per face</li>
+                        <li>EWA temporal smoothing is applied to the primary face to reduce flicker</li>
+                        <li>Results are pushed to all browser clients instantly via Socket.IO WebSocket</li>
+                        <li>Chart.js renders a live sliding trend graph; engagement score is updated in real time</li>
                     </ol>
                 </div>
 
@@ -97,7 +117,7 @@
                     <p>Repository: <a href="https://github.com/devansh-tg/emojify--copy-" target="_blank">emojify--copy-</a></p>
                 </div>
 
-                <div class="back-button-container">
+                <div style="text-align:center;margin-top:32px">
                     <a href="/" class="back-button">← Back to Detection</a>
                 </div>
             </div>
@@ -107,8 +127,42 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 AI Emotion Detection System | Built with TensorFlow & Flask</p>
+            <p>&copy; 2026 EmoteVision | Built with TensorFlow, Flask-SocketIO &amp; Chart.js</p>
         </div>
     </footer>
+
+</div><!-- /.page-wrapper -->
+
+<script>
+// Minimal particle + theme init for about page
+(function(){
+    const saved = localStorage.getItem('emotevision-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+
+    // Particles
+    const cvs = document.getElementById('particle-canvas');
+    if (!cvs) return;
+    const ctx = cvs.getContext('2d');
+    let w, h;
+    const COUNT = 40;
+    const LINK = 130;
+    function resize() { w = cvs.width = innerWidth; h = cvs.height = innerHeight; }
+    resize(); addEventListener('resize', resize);
+    class P {
+        constructor() { this.x=Math.random()*w; this.y=Math.random()*h; this.vx=(Math.random()-.5)*.4; this.vy=(Math.random()-.5)*.4; this.r=Math.random()*2+1; }
+        update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>w)this.vx*=-1; if(this.y<0||this.y>h)this.vy*=-1; }
+    }
+    const ps = Array.from({length:COUNT}, ()=>new P());
+    (function frame(){
+        ctx.clearRect(0,0,w,h);
+        for(let i=0;i<COUNT;i++) for(let j=i+1;j<COUNT;j++){
+            const dx=ps[i].x-ps[j].x, dy=ps[i].y-ps[j].y, d=Math.sqrt(dx*dx+dy*dy);
+            if(d<LINK){ctx.beginPath();ctx.moveTo(ps[i].x,ps[i].y);ctx.lineTo(ps[j].x,ps[j].y);ctx.strokeStyle=`rgba(0,212,255,${((1-d/LINK)*.2).toFixed(3)})`;ctx.lineWidth=.5;ctx.stroke();}
+        }
+        for(const p of ps){p.update();ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,212,255,.35)';ctx.fill();}
+        requestAnimationFrame(frame);
+    })();
+})();
+</script>
 </body>
 </html>
