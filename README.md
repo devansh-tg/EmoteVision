@@ -115,8 +115,8 @@ src/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/devansh-tg/emojify--copy-.git
-cd emojify--copy-/src
+git clone https://github.com/devansh-tg/EmoteVision.git
+cd EmoteVision/src
 ```
 
 ### 2. Create a virtual environment (recommended)
