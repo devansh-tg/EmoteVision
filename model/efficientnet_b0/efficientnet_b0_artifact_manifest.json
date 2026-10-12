@@ -1,0 +1,82 @@
+{
+  "efficientnet_b0.h5": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0.h5",
+    "size_bytes": 20940896,
+    "sha256": "02dcd6f8f42fbaeba32121df8e30246d0a64c6ddef2116f1c4efd23d6a1c32c0"
+  },
+  "efficientnet_b0.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0.weights.h5",
+    "size_bytes": 20827520,
+    "sha256": "a03796ddc9899464ce0185028401297dd58ab5bc368547e03960be84cd8b844c"
+  },
+  "efficientnet_b0_best.h5": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.h5",
+    "size_bytes": 20940896,
+    "sha256": "8d3be1089ef3cbf85c762acd754323f58e0d0603e0c5f7e1bdc4de01e938794e"
+  },
+  "efficientnet_b0_best.pth": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.pth",
+    "size_bytes": 17631501,
+    "sha256": "120c63256a39f4dac8bd2aae2fc308e995037604608a8bc6d71a125c2209e8fa"
+  },
+  "efficientnet_b0_best.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.weights.h5",
+    "size_bytes": 20827520,
+    "sha256": "28ef04013da9a5fb9c7d7affab86557752729e8c71b78c42dda906ae3d5e5060"
+  },
+  "efficientnet_b0_checkpoint.h5": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_checkpoint.h5",
+    "size_bytes": 20940896,
+    "sha256": "463933b3059a52271afa0c8dc6b8a0837e2d7ea648997dc7b788c62470a98c81"
+  },
+  "efficientnet_b0_classification_report.json": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_classification_report.json",
+    "size_bytes": 1340,
+    "sha256": "974097f8d14a78756e649961aa502a33d690030ca65829b3067a4faeaa9189c6"
+  },
+  "efficientnet_b0_classification_report.txt": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_classification_report.txt",
+    "size_bytes": 596,
+    "sha256": "d4827c5e304093e3ba065fc7c7edcc5b4d65fe251698577986a1f290e3188c82"
+  },
+  "efficientnet_b0_confusion_matrix.csv": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_confusion_matrix.csv",
+    "size_bytes": 161,
+    "sha256": "f4f2c2dd54efdecab353278d84a18c7cd0114f298799ac4328cca9c7689a3418"
+  },
+  "efficientnet_b0_confusion_matrix.png": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_confusion_matrix.png",
+    "size_bytes": 114538,
+    "sha256": "a4b24877eeffc505ca415f8660baf90889ce120d2d1a709e0025d50873f21e33"
+  },
+  "efficientnet_b0_metrics.csv": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_metrics.csv",
+    "size_bytes": 286,
+    "sha256": "a50297843cd553d1ff5c75e7debdce04027fb9d3d86a4d7f27dabb7c4fc12975"
+  },
+  "efficientnet_b0_metrics.json": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_metrics.json",
+    "size_bytes": 314,
+    "sha256": "05aaeef33a8e5bd3322dbb95e765980333ffbf0480cc3540b0d2fe137679ef1c"
+  },
+  "efficientnet_b0_model_meta.json": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_model_meta.json",
+    "size_bytes": 54470,
+    "sha256": "29943058f765b651223b8b5fc3e4b53e447609ea800044a345b16dab7e948ab1"
+  },
+  "efficientnet_b0_training_history.csv": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.csv",
+    "size_bytes": 8177,
+    "sha256": "2f1ffe4d7e84c8312871e8cd1a3ae3c38f34c0c9d3ce8886c25d0492da0afac5"
+  },
+  "efficientnet_b0_training_history.json": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.json",
+    "size_bytes": 9916,
+    "sha256": "2e1deba9d32502c93435213edba4da229e657fb97cc386654e0f63da4b145d34"
+  },
+  "efficientnet_b0_training_history.png": {
+    "path": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.png",
+    "size_bytes": 124035,
+    "sha256": "247dfbd8c6e40c68cb7aa8dc2e6d2403975c3da815059b8698b2107fc2c3ed6b"
+  }
+}

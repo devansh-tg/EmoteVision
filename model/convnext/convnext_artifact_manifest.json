@@ -1,0 +1,82 @@
+{
+  "convnext.h5": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext.h5",
+    "size_bytes": 201209872,
+    "sha256": "cf0cc7a0641d7df102e796eacb5d9789f82da44e9ceae3593d5511b48b75eb05"
+  },
+  "convnext.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext.weights.h5",
+    "size_bytes": 200997032,
+    "sha256": "bcbde9fbebc1af0d8997e375cdd8335294730b87bddcb2ed0a25770ab8c10e45"
+  },
+  "convnext_best.h5": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_best.h5",
+    "size_bytes": 201209872,
+    "sha256": "7f285df7e7271cef53adda350f3be860234e8083dc9009a87d8742a6bbc45248"
+  },
+  "convnext_best.pth": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_best.pth",
+    "size_bytes": 198733275,
+    "sha256": "908edcb604402786b750785d4fdb7744051ae475b0432e197ab4ecd16b4c1286"
+  },
+  "convnext_best.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_best.weights.h5",
+    "size_bytes": 200997032,
+    "sha256": "320fa46aec69906b5198dec3a97d7a2b2f1b86c47740ba385edcf43b413d2ba7"
+  },
+  "convnext_checkpoint.h5": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_checkpoint.h5",
+    "size_bytes": 201209872,
+    "sha256": "7f285df7e7271cef53adda350f3be860234e8083dc9009a87d8742a6bbc45248"
+  },
+  "convnext_classification_report.json": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_classification_report.json",
+    "size_bytes": 1373,
+    "sha256": "9e8880ad510a105241382d7bf4037ac7310e8cb9ea3e0e3d7d9a40e266b5e4a5"
+  },
+  "convnext_classification_report.txt": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_classification_report.txt",
+    "size_bytes": 596,
+    "sha256": "49b0e6d3a10ef2c13118e3301cfddee723e092c1ae006a8ff61f67b06b1be0b3"
+  },
+  "convnext_confusion_matrix.csv": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_confusion_matrix.csv",
+    "size_bytes": 166,
+    "sha256": "bcac7df6b0665beb01864d2d8056686068d044841eea40d6df6567d1a1881678"
+  },
+  "convnext_confusion_matrix.png": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_confusion_matrix.png",
+    "size_bytes": 117212,
+    "sha256": "3614250e46d0837b7b6be5b9fe8f67db5e70aa4e89421ee95ff50144262f9c0e"
+  },
+  "convnext_metrics.csv": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_metrics.csv",
+    "size_bytes": 287,
+    "sha256": "e9944a301341c3dc57a2f2fb089be2f8fd6551d9d248daa9a0f0ab47cb025ec2"
+  },
+  "convnext_metrics.json": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_metrics.json",
+    "size_bytes": 315,
+    "sha256": "149528fb317110b56f965bb07eb1e83e9f68d78853ab7124c90f3818eba79a51"
+  },
+  "convnext_model_meta.json": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_model_meta.json",
+    "size_bytes": 71597,
+    "sha256": "1b7519452a125ca27ec04401bc3820e785b28e4a1e035fa5df3fb75943b126a7"
+  },
+  "convnext_training_history.csv": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.csv",
+    "size_bytes": 8240,
+    "sha256": "d62c128f98aeb1b5380f02d54884bef01a1b48444bd8aaada22fb0d42b6d4b83"
+  },
+  "convnext_training_history.json": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.json",
+    "size_bytes": 9979,
+    "sha256": "9d75b839331ff85c4706bc2fb3281528804241e4deb03a6da8a48c532bad2805"
+  },
+  "convnext_training_history.png": {
+    "path": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.png",
+    "size_bytes": 123091,
+    "sha256": "cebf869c9d8c1aa0127000ca868a3d3d8b14d83408560a47613c6e108be0dcb5"
+  }
+}

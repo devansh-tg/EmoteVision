@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script defer src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body>
 <div class="app-shell">
@@ -39,7 +38,7 @@
             </div>
             <div class="system-status">
                 <span class="status-badge" id="status" data-state="warning"><span class="status-dot"></span>Connecting</span>
-                <span class="meta-pill" id="ws-badge">Socket initializing</span>
+                <span class="meta-pill" id="ws-badge">Camera initializing</span>
             </div>
         </section>
 
@@ -54,7 +53,11 @@
         <section class="dashboard-grid">
             <article class="panel video-panel">
                 <div class="panel-header"><div><span class="panel-index">01 / LIVE INPUT</span><h2>Camera feed</h2><p>Annotated stream from the inference worker</p></div><span class="feed-indicator"><span class="status-dot"></span>Live</span></div>
-                <div class="video-frame"><img id="video-feed" src="{{ url_for('video_feed') }}" alt="Live webcam feed with emotion overlay"><span class="feed-corner top-left"></span><span class="feed-corner bottom-right"></span></div>
+                <div class="video-frame" id="video-frame">
+                    <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Live webcam feed with emotion overlay">
+                    <span class="feed-state" id="feed-state">Connecting camera</span>
+                    <span class="feed-corner top-left"></span><span class="feed-corner bottom-right"></span>
+                </div>
             </article>
 
             <article class="panel emotion-panel">

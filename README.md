@@ -1,80 +1,103 @@
 # EmoteVision
 
-FER2013 facial-emotion recognition with a Flask/Socket.IO web application and
-four model research tracks: Custom CNN, EfficientNet-B0, ResNet50, and
-ConvNeXt-Small.
+Research and deployment workspace for seven-class FER2013 facial-emotion
+recognition. The repository contains a production Flask/Socket.IO camera
+application, a preserved Custom CNN checkpoint, reproducible training code,
+and evaluation artifacts for four controlled model families:
+
+- Custom CNN
+- EfficientNet-B0
+- ResNet50
+- ConvNeXt-Small
+
+The application and research pipelines are intentionally separated. Training
+artifacts are never used as the production model unless explicitly configured.
 
 ## Repository structure
 
 ```text
-web_app/                         # Production web application and inference
-|-- app.py
-|-- config.py
-|-- requirements.txt
-|-- .env.example
-|-- utils/                       # Detector and frame-buffer code
-|-- templates/                   # Flask HTML templates
+web_app/                         # Production application and inference
+|-- app.py                       # Flask/Socket.IO entry point
+|-- config.py                    # Environment-driven configuration
+|-- utils/                       # Camera and inference pipeline
+|-- templates/                   # Dashboard HTML
 |-- static/                      # Browser JavaScript and CSS
-|-- emojis/                      # Optional local assets
-|-- test.py                      # Local webcam utility
-|-- export_tflite.py             # TFLite conversion utility
-`-- tests/                       # Web/inference tests
+|-- emojis/                      # Local UI assets
+`-- tests/                       # Application tests
 
-training/
-`-- custom_cnn/
-    `-- train.py                 # Legacy split training entry point
+model/                           # Preserved checkpoints and research outputs
+|-- custom_cnn/                  # Production model used by the app
+|-- legacy_efficientnet_b0/      # Historical artifacts
+|-- efficientnet_b0/             # Frozen-backbone experiment
+|-- resnet/                      # Frozen-backbone experiment
+`-- convnext/                    # Frozen-backbone experiment
 
-models/
-|-- custom_cnn/
-|   |-- model.h5                 # Production checkpoint
-|   `-- model_meta.json          # Production model metadata
-`-- efficientnet_b0/
-    |-- efficientnet_b0.h5
-    |-- efficientnet_b0_best.h5
-    |-- efficientnet_b0_checkpoint.h5
-    |-- efficientnet_b0_model_meta.json
-    |-- efficientnet_b0_classification_report.txt
-    |-- efficientnet_b0_confusion_matrix.png
-    `-- efficientnet_b0_training_history.png
+training/                        # Reproducible training entry points
+|-- common.py                    # Shared repository training helpers
+|-- run_all_feature_extraction.py # Standalone Kaggle runner
+|-- custom_cnn/train.py          # Custom CNN baseline
+|-- legacy_efficientnet_b0/train.py
+|-- efficientnet_b0/train.py
+|-- resnet/train.py
+`-- convnext/train.py
 
-data/
-`-- fer2013/
-    |-- train/<class>/*.jpg
-    `-- test/<class>/*.jpg
+data/fer2013/                    # Local legacy directory split
+|-- train/<class>/*.jpg
+`-- test/<class>/*.jpg
+
+results/                         # Aggregate comparison metrics
 ```
 
-The old `src/` folder has been replaced by feature-specific folders. The
-dataset and model artifacts are intentionally outside the web application.
+The dataset is intentionally ignored for future commits because it is large
+and should be obtained from the approved FER2013 source. Existing checkpoints
+and evaluation artifacts are retained because they document the experiments
+and include the production model required by the web application.
 
-## Current experiment protocol
+## Experiment protocol
 
-The existing training workflow uses the original FER2013 directory split:
+The recovered comparison outputs use the original FER2013 directory split:
 
 ```text
 Training:   data/fer2013/train
 Validation: data/fer2013/test
 ```
 
-This is a legacy validation protocol. It is useful for reproducing the
-existing project results, but it is not an untouched final-test evaluation
-because the original test directory is used during model selection. Use the
-same protocol for all four models if you want a directly comparable table.
+This is a legacy validation protocol. The original `test/` directory is used
+during model selection, so these are not untouched final-test results. Report
+all metrics as legacy validation results rather than as untouched final-test
+performance.
+
+The EfficientNet-B0, ResNet50, and ConvNeXt-Small comparison runs use frozen
+ImageNet backbones and train only a seven-class classification head. The
+Custom CNN is trained from scratch.
+
+## Recovered comparison results
+
+| Model | Accuracy | Balanced accuracy | Macro F1 |
+| --- | ---: | ---: | ---: |
+| EfficientNet-B0 | 54.54% | 55.95% | 55.18% |
+| ResNet50 | 56.24% | 56.20% | 56.55% |
+| ConvNeXt-Small | 49.11% | 50.46% | 48.32% |
+
+The source metrics, reports, metadata, and plots are stored beside each model
+under `model/<name>/`. These values are measured on the legacy validation
+protocol and must not be presented as a clean held-out test benchmark.
 
 ## Run the web application
 
+The tested Windows runtime uses Python 3.11 with TensorFlow 2.20:
+
 ```powershell
 cd web_app
-python -m venv .venv
-.venv\Scripts\activate
+py -3.11 -m venv .venv
+.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python app.py
 ```
 
-Open `http://127.0.0.1:5000`.
-
-The application loads the production Custom CNN from
-`models/custom_cnn/model.h5` by default. Copy `web_app/.env.example` to
-`web_app/.env` to override model, camera, server, or TFLite settings.
+The application loads `model/custom_cnn/model.h5` by default. Copy
+`web_app/.env.example` to `web_app/.env` to override model, camera, server, or
+TFLite settings. Open `http://127.0.0.1:5000` after the server starts.
 
 ## Train the legacy Custom CNN
 
@@ -84,22 +107,67 @@ From the repository root:
 python training/custom_cnn/train.py `
   --train-dir /kaggle/input/emotion-detection-dataset/train `
   --val-dir /kaggle/input/emotion-detection-dataset/test `
-  --output-dir models/custom_cnn/runs/legacy_split `
+  --output-dir model/custom_cnn/runs/legacy_split `
   --epochs 150 `
   --batch-size 64
 ```
 
-The script saves the final model, best checkpoint, metadata, confusion matrix,
-classification report, and training-history plot into the selected output
-folder.
+## Train the feature-extraction baselines locally
 
-## Model research folders
+EfficientNet-B0, ResNet, and ConvNeXt use frozen ImageNet backbones with a
+trainable seven-class emotion head:
 
-The current repository contains preserved Custom CNN and EfficientNet-B0
-artifacts. ResNet50 and ConvNeXt-Small do not yet have trained checkpoints in
-this working tree. Their Kaggle training scripts/notebooks should be kept
-separate from the production application and should use the same legacy split
-if they are being compared with the existing results.
+```powershell
+python training/efficientnet_b0/train.py `
+  --train-dir data/fer2013/train `
+  --val-dir data/fer2013/test `
+  --output-dir model/efficientnet_b0/runs/legacy_split
+
+python training/resnet/train.py `
+  --train-dir data/fer2013/train `
+  --val-dir data/fer2013/test `
+  --output-dir model/resnet/runs/legacy_split
+
+python training/convnext/train.py `
+  --train-dir data/fer2013/train `
+  --val-dir data/fer2013/test `
+  --output-dir model/convnext/runs/legacy_split
+```
+
+Generated checkpoints, metadata, reports, confusion matrices, and histories
+remain under the corresponding `model/<name>/` directory.
+
+## Run all comparison models in Kaggle
+
+`training/run_all_feature_extraction.py` is standalone and is intended to be
+uploaded as a Kaggle code dataset. In a fresh Kaggle session, copy it from
+`/kaggle/input` into writable storage before execution:
+
+```python
+!cp "$(find /kaggle/input -name 'run_all_feature_extraction.py' | head -n 1)" \
+    /kaggle/working/run_all_feature_extraction.py
+```
+
+Then run the models sequentially:
+
+```python
+!python /kaggle/working/run_all_feature_extraction.py \
+    --dataset-root /kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data \
+    --output-root /kaggle/working/emotevision_outputs \
+    --models efficientnet_b0 resnet convnext \
+    --weights imagenet \
+    --epochs 100 \
+    --batch-size 64 \
+    --seed 42
+```
+
+Package and download the output before ending the Kaggle session:
+
+```python
+!cd /kaggle/working && zip -r emotevision_outputs.zip emotevision_outputs
+from IPython.display import FileLink, display
+display(FileLink("/kaggle/working/emotevision_outputs.zip"))
+```
 
 ## Testing
 
@@ -107,12 +175,17 @@ if they are being compared with the existing results.
 pytest web_app/tests/ -v --tb=short
 ```
 
-## Academic reporting notes
+## Historical compatibility
 
-- Report the split and preprocessing beside every model metric.
-- Label results from `data/fer2013/test` as legacy validation results.
-- Do not describe estimated real-world accuracy as measured accuracy.
-- Preserve the production Custom CNN checkpoint while writing new runs under
-  `models/custom_cnn/runs/`.
-- Keep datasets, checkpoints, reports, and application code in their separate
-  feature folders.
+`training/legacy_efficientnet_b0/train.py` is retained as a historical
+training implementation. It is separate from the frozen-backbone comparison
+runner and should not be used to interpret the recovered comparison metrics.
+The historical outputs are preserved in `model/legacy_efficientnet_b0/`.
+
+## Academic reporting
+
+Report the split, input size, color mode, preprocessing, backbone status, and
+checkpoint format beside every metric. Never describe estimated real-world
+accuracy as measured accuracy. Keep `model/custom_cnn/model.h5` intact unless
+the production application is deliberately migrated and tested against a
+replacement.

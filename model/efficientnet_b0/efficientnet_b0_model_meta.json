@@ -1,0 +1,2133 @@
+{
+  "schema_version": "1.0",
+  "experiment_name": "FER2013 legacy directory split feature extraction",
+  "model_family": "efficientnet_b0",
+  "display_name": "EfficientNetB0",
+  "architecture": {
+    "keras_application": "keras.src.applications.efficientnet.EfficientNetB0",
+    "model_name": "efficientnet_b0_feature_extractor",
+    "input_shape": [
+      null,
+      96,
+      96,
+      3
+    ],
+    "output_shape": [
+      null,
+      7
+    ],
+    "input_channels": 3,
+    "input_color_mode": "rgb",
+    "input_size": [
+      96,
+      96
+    ],
+    "class_count": 7,
+    "layers": [
+      {
+        "name": "input_layer",
+        "type": "InputLayer",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "rescaling",
+        "type": "Rescaling",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "normalization",
+        "type": "Normalization",
+        "trainable": false,
+        "parameter_count": 7,
+        "output_shape": null
+      },
+      {
+        "name": "rescaling_1",
+        "type": "Rescaling",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "stem_conv_pad",
+        "type": "ZeroPadding2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "stem_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 864,
+        "output_shape": null
+      },
+      {
+        "name": "stem_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 128,
+        "output_shape": null
+      },
+      {
+        "name": "stem_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 288,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 128,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 264,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 288,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 512,
+        "output_shape": null
+      },
+      {
+        "name": "block1a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 64,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 1536,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_dwconv_pad",
+        "type": "ZeroPadding2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 864,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 388,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 480,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 2304,
+        "output_shape": null
+      },
+      {
+        "name": "block2a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 96,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 3456,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 576,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 1296,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 576,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 870,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 1008,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 3456,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 96,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block2b_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 3456,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 576,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_dwconv_pad",
+        "type": "ZeroPadding2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 3600,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 576,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 870,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 1008,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 5760,
+        "output_shape": null
+      },
+      {
+        "name": "block3a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 160,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 960,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 6000,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 960,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 2410,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 2640,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 160,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block3b_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 960,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_dwconv_pad",
+        "type": "ZeroPadding2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 2160,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 960,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 2410,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 2640,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "block4a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 320,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 4320,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9620,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 10080,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 320,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4b_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 4320,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9620,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 10080,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 320,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block4c_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 12000,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1920,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9620,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 10080,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 53760,
+        "output_shape": null
+      },
+      {
+        "name": "block5a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 448,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 75264,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 16800,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 18844,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19488,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 75264,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 448,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5b_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 75264,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 16800,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 18844,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19488,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 75264,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 448,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block5c_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 75264,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_dwconv_pad",
+        "type": "ZeroPadding2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 16800,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 2688,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 18844,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19488,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 129024,
+        "output_shape": null
+      },
+      {
+        "name": "block6a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 28800,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 55344,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 56448,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6b_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 28800,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 55344,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 56448,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6c_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 28800,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 55344,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 56448,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_drop",
+        "type": "Dropout",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block6d_add",
+        "type": "Add",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_expand_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 221184,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_expand_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_expand_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_dwconv",
+        "type": "DepthwiseConv2D",
+        "trainable": false,
+        "parameter_count": 10368,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 4608,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_se_squeeze",
+        "type": "GlobalAveragePooling2D",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_se_reshape",
+        "type": "Reshape",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_se_reduce",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 55344,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_se_expand",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 56448,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_se_excite",
+        "type": "Multiply",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_project_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 368640,
+        "output_shape": null
+      },
+      {
+        "name": "block7a_project_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 1280,
+        "output_shape": null
+      },
+      {
+        "name": "top_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 409600,
+        "output_shape": null
+      },
+      {
+        "name": "top_bn",
+        "type": "BatchNormalization",
+        "trainable": false,
+        "parameter_count": 5120,
+        "output_shape": null
+      },
+      {
+        "name": "top_activation",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "global_average_pooling",
+        "type": "GlobalAveragePooling2D",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "head_batch_normalization",
+        "type": "BatchNormalization",
+        "trainable": true,
+        "parameter_count": 5120,
+        "output_shape": null
+      },
+      {
+        "name": "head_dropout",
+        "type": "Dropout",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "head_dense",
+        "type": "Dense",
+        "trainable": true,
+        "parameter_count": 327936,
+        "output_shape": null
+      },
+      {
+        "name": "head_dense_dropout",
+        "type": "Dropout",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "emotion",
+        "type": "Dense",
+        "trainable": true,
+        "parameter_count": 1799,
+        "output_shape": null
+      }
+    ]
+  },
+  "training_method": "feature_extraction",
+  "backbone_weights": "imagenet",
+  "backbone_trainable": false,
+  "trainable_layers": [
+    "global_average_pooling",
+    "head_batch_normalization",
+    "head_dropout",
+    "head_dense",
+    "head_dense_dropout",
+    "emotion"
+  ],
+  "non_trainable_layers": [
+    "input_layer",
+    "rescaling",
+    "normalization",
+    "rescaling_1",
+    "stem_conv_pad",
+    "stem_conv",
+    "stem_bn",
+    "stem_activation",
+    "block1a_dwconv",
+    "block1a_bn",
+    "block1a_activation",
+    "block1a_se_squeeze",
+    "block1a_se_reshape",
+    "block1a_se_reduce",
+    "block1a_se_expand",
+    "block1a_se_excite",
+    "block1a_project_conv",
+    "block1a_project_bn",
+    "block2a_expand_conv",
+    "block2a_expand_bn",
+    "block2a_expand_activation",
+    "block2a_dwconv_pad",
+    "block2a_dwconv",
+    "block2a_bn",
+    "block2a_activation",
+    "block2a_se_squeeze",
+    "block2a_se_reshape",
+    "block2a_se_reduce",
+    "block2a_se_expand",
+    "block2a_se_excite",
+    "block2a_project_conv",
+    "block2a_project_bn",
+    "block2b_expand_conv",
+    "block2b_expand_bn",
+    "block2b_expand_activation",
+    "block2b_dwconv",
+    "block2b_bn",
+    "block2b_activation",
+    "block2b_se_squeeze",
+    "block2b_se_reshape",
+    "block2b_se_reduce",
+    "block2b_se_expand",
+    "block2b_se_excite",
+    "block2b_project_conv",
+    "block2b_project_bn",
+    "block2b_drop",
+    "block2b_add",
+    "block3a_expand_conv",
+    "block3a_expand_bn",
+    "block3a_expand_activation",
+    "block3a_dwconv_pad",
+    "block3a_dwconv",
+    "block3a_bn",
+    "block3a_activation",
+    "block3a_se_squeeze",
+    "block3a_se_reshape",
+    "block3a_se_reduce",
+    "block3a_se_expand",
+    "block3a_se_excite",
+    "block3a_project_conv",
+    "block3a_project_bn",
+    "block3b_expand_conv",
+    "block3b_expand_bn",
+    "block3b_expand_activation",
+    "block3b_dwconv",
+    "block3b_bn",
+    "block3b_activation",
+    "block3b_se_squeeze",
+    "block3b_se_reshape",
+    "block3b_se_reduce",
+    "block3b_se_expand",
+    "block3b_se_excite",
+    "block3b_project_conv",
+    "block3b_project_bn",
+    "block3b_drop",
+    "block3b_add",
+    "block4a_expand_conv",
+    "block4a_expand_bn",
+    "block4a_expand_activation",
+    "block4a_dwconv_pad",
+    "block4a_dwconv",
+    "block4a_bn",
+    "block4a_activation",
+    "block4a_se_squeeze",
+    "block4a_se_reshape",
+    "block4a_se_reduce",
+    "block4a_se_expand",
+    "block4a_se_excite",
+    "block4a_project_conv",
+    "block4a_project_bn",
+    "block4b_expand_conv",
+    "block4b_expand_bn",
+    "block4b_expand_activation",
+    "block4b_dwconv",
+    "block4b_bn",
+    "block4b_activation",
+    "block4b_se_squeeze",
+    "block4b_se_reshape",
+    "block4b_se_reduce",
+    "block4b_se_expand",
+    "block4b_se_excite",
+    "block4b_project_conv",
+    "block4b_project_bn",
+    "block4b_drop",
+    "block4b_add",
+    "block4c_expand_conv",
+    "block4c_expand_bn",
+    "block4c_expand_activation",
+    "block4c_dwconv",
+    "block4c_bn",
+    "block4c_activation",
+    "block4c_se_squeeze",
+    "block4c_se_reshape",
+    "block4c_se_reduce",
+    "block4c_se_expand",
+    "block4c_se_excite",
+    "block4c_project_conv",
+    "block4c_project_bn",
+    "block4c_drop",
+    "block4c_add",
+    "block5a_expand_conv",
+    "block5a_expand_bn",
+    "block5a_expand_activation",
+    "block5a_dwconv",
+    "block5a_bn",
+    "block5a_activation",
+    "block5a_se_squeeze",
+    "block5a_se_reshape",
+    "block5a_se_reduce",
+    "block5a_se_expand",
+    "block5a_se_excite",
+    "block5a_project_conv",
+    "block5a_project_bn",
+    "block5b_expand_conv",
+    "block5b_expand_bn",
+    "block5b_expand_activation",
+    "block5b_dwconv",
+    "block5b_bn",
+    "block5b_activation",
+    "block5b_se_squeeze",
+    "block5b_se_reshape",
+    "block5b_se_reduce",
+    "block5b_se_expand",
+    "block5b_se_excite",
+    "block5b_project_conv",
+    "block5b_project_bn",
+    "block5b_drop",
+    "block5b_add",
+    "block5c_expand_conv",
+    "block5c_expand_bn",
+    "block5c_expand_activation",
+    "block5c_dwconv",
+    "block5c_bn",
+    "block5c_activation",
+    "block5c_se_squeeze",
+    "block5c_se_reshape",
+    "block5c_se_reduce",
+    "block5c_se_expand",
+    "block5c_se_excite",
+    "block5c_project_conv",
+    "block5c_project_bn",
+    "block5c_drop",
+    "block5c_add",
+    "block6a_expand_conv",
+    "block6a_expand_bn",
+    "block6a_expand_activation",
+    "block6a_dwconv_pad",
+    "block6a_dwconv",
+    "block6a_bn",
+    "block6a_activation",
+    "block6a_se_squeeze",
+    "block6a_se_reshape",
+    "block6a_se_reduce",
+    "block6a_se_expand",
+    "block6a_se_excite",
+    "block6a_project_conv",
+    "block6a_project_bn",
+    "block6b_expand_conv",
+    "block6b_expand_bn",
+    "block6b_expand_activation",
+    "block6b_dwconv",
+    "block6b_bn",
+    "block6b_activation",
+    "block6b_se_squeeze",
+    "block6b_se_reshape",
+    "block6b_se_reduce",
+    "block6b_se_expand",
+    "block6b_se_excite",
+    "block6b_project_conv",
+    "block6b_project_bn",
+    "block6b_drop",
+    "block6b_add",
+    "block6c_expand_conv",
+    "block6c_expand_bn",
+    "block6c_expand_activation",
+    "block6c_dwconv",
+    "block6c_bn",
+    "block6c_activation",
+    "block6c_se_squeeze",
+    "block6c_se_reshape",
+    "block6c_se_reduce",
+    "block6c_se_expand",
+    "block6c_se_excite",
+    "block6c_project_conv",
+    "block6c_project_bn",
+    "block6c_drop",
+    "block6c_add",
+    "block6d_expand_conv",
+    "block6d_expand_bn",
+    "block6d_expand_activation",
+    "block6d_dwconv",
+    "block6d_bn",
+    "block6d_activation",
+    "block6d_se_squeeze",
+    "block6d_se_reshape",
+    "block6d_se_reduce",
+    "block6d_se_expand",
+    "block6d_se_excite",
+    "block6d_project_conv",
+    "block6d_project_bn",
+    "block6d_drop",
+    "block6d_add",
+    "block7a_expand_conv",
+    "block7a_expand_bn",
+    "block7a_expand_activation",
+    "block7a_dwconv",
+    "block7a_bn",
+    "block7a_activation",
+    "block7a_se_squeeze",
+    "block7a_se_reshape",
+    "block7a_se_reduce",
+    "block7a_se_expand",
+    "block7a_se_excite",
+    "block7a_project_conv",
+    "block7a_project_bn",
+    "top_conv",
+    "top_bn",
+    "top_activation"
+  ],
+  "class_mapping": {
+    "angry": 0,
+    "disgust": 1,
+    "fear": 2,
+    "happy": 3,
+    "neutral": 4,
+    "sad": 5,
+    "surprise": 6
+  },
+  "dataset": {
+    "train_samples": 28709,
+    "validation_samples": 7178,
+    "train_batches_per_epoch": 449,
+    "validation_batches": 113,
+    "class_counts_train": {
+      "angry": 3995,
+      "disgust": 436,
+      "fear": 4097,
+      "happy": 7215,
+      "neutral": 4965,
+      "sad": 4830,
+      "surprise": 3171
+    },
+    "class_counts_validation": {
+      "angry": 958,
+      "disgust": 111,
+      "fear": 1024,
+      "happy": 1774,
+      "neutral": 1233,
+      "sad": 1247,
+      "surprise": 831
+    },
+    "dataset_root": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data",
+    "train_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/train",
+    "validation_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/test",
+    "test_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/test",
+    "protocol": "legacy_train_directory_and_test_directory_as_validation",
+    "test_set_used_for_model_selection": true
+  },
+  "preprocessing": {
+    "preprocessing_function": "keras.src.applications.efficientnet.preprocess_input",
+    "image_resizing": "96x96",
+    "color_mode": "rgb",
+    "augmentation": "none",
+    "normalization": "architecture-specific preprocess_input"
+  },
+  "training_configuration": {
+    "requested_epochs": 80,
+    "epochs_trained": 80,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "loss": "categorical_crossentropy",
+    "class_weights": {
+      "0": 1.0266046844269623,
+      "1": 9.406618610747051,
+      "2": 1.0010460615781582,
+      "3": 0.5684387684387684,
+      "4": 0.8260394187886635,
+      "5": 0.8491274770777877,
+      "6": 1.293372978330405
+    },
+    "early_stopping": {
+      "monitor": "val_accuracy",
+      "patience": 12,
+      "restore_best_weights": true,
+      "mode": "max"
+    },
+    "reduce_learning_rate": {
+      "monitor": "val_loss",
+      "patience": 5,
+      "factor": 0.5,
+      "min_learning_rate": 1e-07
+    },
+    "checkpoint_selection": "best validation accuracy"
+  },
+  "seed": 42,
+  "random_seed": {
+    "python": 42,
+    "numpy": 42,
+    "tensorflow": 42
+  },
+  "environment": {
+    "python_version": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "tensorflow_version": "2.20.0",
+    "numpy_version": "2.1.3",
+    "matplotlib_version": "3.10.0",
+    "cuda_visible_devices": null,
+    "gpu_devices": [
+      "/physical_device:GPU:0",
+      "/physical_device:GPU:1"
+    ],
+    "cpu_devices": [
+      "/physical_device:CPU:0"
+    ]
+  },
+  "parameters": {
+    "total": 4384426,
+    "trainable": 332295,
+    "non_trainable": 4052131
+  },
+  "training_seconds": 2987.845,
+  "best_epoch": 79,
+  "best_validation_metrics": {
+    "epoch": 79,
+    "val_accuracy": 0.545416533946991,
+    "val_loss": 1.2576879262924194,
+    "accuracy": 0.5858093500137329,
+    "loss": 0.9686743021011353
+  },
+  "last_epoch_metrics": {
+    "accuracy": 0.584067702293396,
+    "loss": 0.9676669239997864,
+    "val_accuracy": 0.5434661507606506,
+    "val_loss": 1.2561864852905273,
+    "learning_rate": 0.0001250000059371814
+  },
+  "metrics": {
+    "accuracy": 0.5454165505711898,
+    "balanced_accuracy": 0.5594658302392377,
+    "precision_macro": 0.5485947794135333,
+    "recall_macro": 0.5594658302392377,
+    "f1_macro": 0.5518439631445479,
+    "precision_weighted": 0.5441609313790658,
+    "recall_weighted": 0.5454165505711898,
+    "f1_weighted": 0.5427911861216278
+  },
+  "artifacts": {
+    "best_model": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.h5",
+    "best_weights": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.weights.h5",
+    "best_pytorch_weights": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_best.pth",
+    "final_model": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0.h5",
+    "final_weights": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0.weights.h5",
+    "checkpoint_model": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_checkpoint.h5",
+    "classification_report_json": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_classification_report.json",
+    "classification_report_text": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_classification_report.txt",
+    "metrics_json": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_metrics.json",
+    "metrics_csv": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_metrics.csv",
+    "confusion_matrix_csv": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_confusion_matrix.csv",
+    "confusion_matrix_png": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_confusion_matrix.png",
+    "training_history_json": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.json",
+    "training_history_csv": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.csv",
+    "training_history_png": "/kaggle/working/emotevision_outputs/efficientnet_b0/efficientnet_b0_training_history.png"
+  }
+}

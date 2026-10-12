@@ -1,8 +1,7 @@
 # train.py - BALANCED OPTIMIZATION: Target 70% accuracy with ~5% overfitting gap
 import os
-import argparse
-import json
-import datetime
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, BatchNormalization, GlobalAveragePooling2D
@@ -13,27 +12,13 @@ from tensorflow.keras.regularizers import l2
 from sklearn.utils.class_weight import compute_class_weight
 import tensorflow as tf
 
-# ── Argument parsing ────────────────────────────────────────────────────────────
-parser = argparse.ArgumentParser(description='Train EmoteVision emotion CNN')
-parser.add_argument('--train-dir', default='/kaggle/input/emotion-detection-dataset/train',
-                    help='Path to training data directory')
-parser.add_argument('--val-dir',   default='/kaggle/input/emotion-detection-dataset/test',
-                    help='Path to validation data directory')
-parser.add_argument('--output-dir', default='models/custom_cnn/runs/legacy_split',
-                    help='Directory to save model files')
-parser.add_argument('--epochs', type=int, default=150, help='Max training epochs')
-parser.add_argument('--batch-size', type=int, default=64, help='Batch size')
-args = parser.parse_args()
-
 # Set random seeds for reproducibility
 np.random.seed(42)
 tf.random.set_seed(42)
 
 # dataset paths
-train_dir = args.train_dir
-val_dir   = args.val_dir
-out_dir   = args.output_dir
-os.makedirs(out_dir, exist_ok=True)
+train_dir = '/kaggle/input/emotion-detection-dataset/data/train'
+val_dir   = '/kaggle/input/emotion-detection-dataset/data/test'
 
 # LIGHTER data augmentation - preserve facial features for better learning
 train_gen = ImageDataGenerator(
@@ -50,7 +35,7 @@ train_gen = ImageDataGenerator(
 )
 val_gen = ImageDataGenerator(rescale=1./255)
 
-batch_size = args.batch_size
+batch_size = 64
 img_size   = (48, 48)
 
 train_loader = train_gen.flow_from_directory(
@@ -167,7 +152,7 @@ callbacks = [
     
     # Save best model based on validation accuracy
     ModelCheckpoint(
-        os.path.join(out_dir, 'model_best.h5'),
+        'model_best.h5',
         monitor='val_accuracy',
         save_best_only=True,
         verbose=1,
@@ -176,7 +161,7 @@ callbacks = [
     
     # Save checkpoint every improvement
     ModelCheckpoint(
-        os.path.join(out_dir, 'model_checkpoint.h5'),
+        'model_checkpoint.h5',
         monitor='val_loss',
         save_best_only=True,
         verbose=0,
@@ -200,7 +185,7 @@ print()
 # model training with class weights and callbacks
 history = model.fit(
     train_loader,
-    epochs=args.epochs,
+    epochs=150,                   # More epochs with aggressive early stopping
     validation_data=val_loader,
     callbacks=callbacks,
     class_weight=class_weights,   # Handle class imbalance
@@ -208,10 +193,10 @@ history = model.fit(
 )
 
 # save final model
-model.save(os.path.join(out_dir, 'model.h5'))
+model.save('model.h5')
 print("\n✅ Training complete!")
-print(f"   💾 Best model saved to: {os.path.join(out_dir, 'model_best.h5')}")
-print(f"   💾 Final model saved to: {os.path.join(out_dir, 'model.h5')}")
+print("   💾 Best model saved to: model_best.h5")
+print("   💾 Final model saved to: model.h5")
 
 # Evaluate and show gap
 print("\n" + "=" * 70)
@@ -250,97 +235,60 @@ else:
 print("-" * 70)
 
 # Estimate real-world performance
-real_world_est = val_acc * 0.92
+real_world_est = val_acc * 0.92  # Typically 8% drop in real conditions
 print(f"\n🌍 Estimated Real-World Accuracy: {real_world_est * 100:.1f}%")
+print(f"   (Based on validation accuracy with typical degradation)")
 
-# ── Save model_meta.json ───────────────────────────────────────────────────────
-import datetime
-import json
-meta = {
-    "val_accuracy":   float(val_acc),
-    "train_accuracy": float(train_acc),
-    "val_loss":       float(val_loss),
-    "train_loss":     float(train_loss),
-    "gap_pct":        float(gap),
-    "epochs_trained": len(history.history['accuracy']),
-    "timestamp":      datetime.datetime.now().isoformat(),
-    "class_names":    list(train_loader.class_indices.keys()),
-}
-meta_path = os.path.join(out_dir, 'model_meta.json')
-with open(meta_path, 'w') as f:
-    json.dump(meta, f, indent=2)
-print(f"\n📋 Model metadata saved to: {meta_path}")
-
-# ── Confusion matrix & classification report ───────────────────────────────────
+# Plot training history
 try:
     import matplotlib.pyplot as plt
-    import seaborn as sns
-    from sklearn.metrics import confusion_matrix, classification_report
-
-    # Predictions on validation set
-    val_loader.reset()
-    y_pred_probs = model.predict(val_loader, verbose=0)
-    y_pred = y_pred_probs.argmax(axis=1)
-    y_true = val_loader.classes
-    class_names = list(val_loader.class_indices.keys())
-
-    # Confusion matrix
-    cm = confusion_matrix(y_true, y_pred)
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-                xticklabels=class_names, yticklabels=class_names)
-    plt.title('Confusion Matrix', fontsize=14, fontweight='bold')
-    plt.ylabel('True Label'); plt.xlabel('Predicted Label')
+    
+    plt.figure(figsize=(15, 5))
+    
+    # Accuracy plot
+    plt.subplot(1, 3, 1)
+    plt.plot(history.history['accuracy'], label='Train', linewidth=2)
+    plt.plot(history.history['val_accuracy'], label='Validation', linewidth=2)
+    plt.xlabel('Epoch', fontsize=12)
+    plt.ylabel('Accuracy', fontsize=12)
+    plt.title('Training vs Validation Accuracy', fontsize=14, fontweight='bold')
+    plt.legend(fontsize=11)
+    plt.grid(True, alpha=0.3)
+    
+    # Loss plot
+    plt.subplot(1, 3, 2)
+    plt.plot(history.history['loss'], label='Train', linewidth=2)
+    plt.plot(history.history['val_loss'], label='Validation', linewidth=2)
+    plt.xlabel('Epoch', fontsize=12)
+    plt.ylabel('Loss', fontsize=12)
+    plt.title('Training vs Validation Loss', fontsize=14, fontweight='bold')
+    plt.legend(fontsize=11)
+    plt.grid(True, alpha=0.3)
+    
+    # Gap plot (difference between train and val accuracy)
+    plt.subplot(1, 3, 3)
+    gap_history = [(t - v) * 100 for t, v in zip(history.history['accuracy'], history.history['val_accuracy'])]
+    plt.plot(gap_history, linewidth=2, color='red')
+    plt.axhline(y=5, color='orange', linestyle='--', label='5% threshold', alpha=0.7)
+    plt.axhline(y=10, color='red', linestyle='--', label='10% threshold', alpha=0.7)
+    plt.xlabel('Epoch', fontsize=12)
+    plt.ylabel('Gap (%)', fontsize=12)
+    plt.title('Overfitting Gap Over Time', fontsize=14, fontweight='bold')
+    plt.legend(fontsize=11)
+    plt.grid(True, alpha=0.3)
+    
     plt.tight_layout()
-    cm_path = os.path.join(out_dir, 'confusion_matrix.png')
-    plt.savefig(cm_path, dpi=150, bbox_inches='tight')
-    print(f"📊 Confusion matrix saved to: {cm_path}")
-
-    # Classification report
-    report = classification_report(y_true, y_pred, target_names=class_names)
-    report_path = os.path.join(out_dir, 'classification_report.txt')
-    with open(report_path, 'w') as f:
-        f.write(report)
-    print(f"📄 Classification report saved to: {report_path}")
-    print("\n" + report)
-
-    # Training curves (accuracy, loss, gap)
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    axes[0].plot(history.history['accuracy'], label='Train', linewidth=2)
-    axes[0].plot(history.history['val_accuracy'], label='Validation', linewidth=2)
-    axes[0].set(xlabel='Epoch', ylabel='Accuracy', title='Accuracy')
-    axes[0].legend(); axes[0].grid(True, alpha=0.3)
-
-    axes[1].plot(history.history['loss'], label='Train', linewidth=2)
-    axes[1].plot(history.history['val_loss'], label='Validation', linewidth=2)
-    axes[1].set(xlabel='Epoch', ylabel='Loss', title='Loss')
-    axes[1].legend(); axes[1].grid(True, alpha=0.3)
-
-    gap_hist = [(t - v) * 100 for t, v in
-                zip(history.history['accuracy'], history.history['val_accuracy'])]
-    axes[2].plot(gap_hist, linewidth=2, color='red')
-    axes[2].axhline(y=5,  color='orange', linestyle='--', label='5%',  alpha=0.7)
-    axes[2].axhline(y=10, color='red',    linestyle='--', label='10%', alpha=0.7)
-    axes[2].set(xlabel='Epoch', ylabel='Gap (%)', title='Overfitting Gap')
-    axes[2].legend(); axes[2].grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    hist_path = os.path.join(out_dir, 'training_history.png')
-    plt.savefig(hist_path, dpi=150, bbox_inches='tight')
-    print(f"📈 Training curves saved to: {hist_path}")
-
+    plt.savefig('training_history.png', dpi=150, bbox_inches='tight')
+    print("\n📊 Training plots saved as 'training_history.png'")
+    print("   (Includes accuracy, loss, and gap analysis)")
 except Exception as e:
-    print(f"\n⚠️  Could not generate artifacts: {e}")
-    import traceback; traceback.print_exc()
+    print(f"\n⚠️  Could not create plots: {e}")
 
 print("\n" + "=" * 70)
 print("🎉 TRAINING COMPLETE!")
 print("=" * 70)
-print(f"\nOutput files in '{out_dir}':")
-print("  model.h5               — final model")
-print("  model_best.h5          — best val_accuracy checkpoint")
-print("  model_meta.json        — accuracy / metadata (read by app.py)")
-print("  confusion_matrix.png   — per-class detection heatmap")
-print("  classification_report.txt — precision / recall / F1 per class")
-print("  training_history.png   — accuracy, loss, gap curves")
+print("\nNext steps:")
+print("1. Check training_history.png for visual analysis")
+print("2. Use model_best.h5 (best validation accuracy)")
+print("3. Test with real webcam using gui_advanced.py")
 print("=" * 70)

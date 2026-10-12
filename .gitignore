@@ -58,12 +58,28 @@ model.tflite
 confusion_matrix.png
 classification_report.txt
 training_history.png
+*.keras
 
-# Local datasets can be very large; keep only if intentionally versioned.
-# data/fer2013/
+# Local datasets can be very large. The legacy FER2013 copy is retained
+# locally for reproducibility but should not be added to future commits.
+data/fer2013/
 
 # Model runs and generated reports.
-models/*/runs/
+model/*/runs/
+models/feature_extraction/*/runs/
+results/runs/
+
+# Large research checkpoints stay in local storage or external artifact
+# hosting. Keep only the production checkpoint required by the web app.
+model/**/*.h5
+model/**/*.weights.h5
+model/**/*.pth
+!model/custom_cnn/model.h5
+
+# Local experiment exports and archives.
+*.zip
+*.tar
+*.tar.gz
 
 # Jupyter Notebook
 .ipynb_checkpoints

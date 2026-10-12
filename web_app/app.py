@@ -102,18 +102,65 @@ def _emit_loop():
     global _total_predictions, _cached_annotated
     import cv2 as _cv2
 
+    detector = None
+    inference_error = None
+    next_model_retry = 0.0
+    next_error_emit = 0.0
+
     while True:
         try:
-            detector = get_detector()
             buf = get_buffer()
         except Exception as exc:
-            log.exception("Detection worker is waiting for startup: %s", exc)
+            log.exception("Camera worker is waiting for startup: %s", exc)
             socketio.sleep(2.0)
             continue
 
         frame = buf.get_frame()
         if frame is None:
             socketio.sleep(0.033)
+            continue
+
+        now = time.monotonic()
+        if detector is None and now >= next_model_retry:
+            try:
+                detector = get_detector()
+                inference_error = None
+            except Exception as exc:
+                inference_error = exc
+                next_model_retry = now + 10.0
+
+        if detector is None:
+            fallback = frame.copy()
+            _cv2.putText(
+                fallback,
+                "Inference unavailable",
+                (24, 42),
+                _cv2.FONT_HERSHEY_SIMPLEX,
+                0.9,
+                (0, 212, 255),
+                2,
+                _cv2.LINE_AA,
+            )
+            ok, enc = _cv2.imencode(
+                ".jpg", fallback, [_cv2.IMWRITE_JPEG_QUALITY, 80]
+            )
+            if ok:
+                with _cached_frame_lock:
+                    _cached_annotated = enc.tobytes()
+            if now >= next_error_emit:
+                log.warning(
+                    "Inference unavailable; serving raw camera frames: %s",
+                    inference_error,
+                )
+                socketio.emit("emotion_update", {
+                    "emotion": None,
+                    "faces_detected": 0,
+                    "uptime": int(time.time() - _session_start),
+                    "total_predictions": _total_predictions,
+                    "error": "Model inference is unavailable",
+                })
+                next_error_emit = now + 2.0
+            socketio.sleep(0.04)
             continue
 
         try:
@@ -216,7 +263,11 @@ def predict():
     if frame is None:
         return jsonify({"error": "Camera not available"}), 503
 
-    _, result = get_detector().detect(frame.copy())
+    try:
+        _, result = get_detector().detect(frame.copy())
+    except Exception as exc:
+        log.warning("Prediction unavailable: %s", exc)
+        return jsonify({"error": "Model inference is unavailable"}), 503
     result["stats"] = {
         "total_predictions": _total_predictions,
         "avg_latency": round(sum(_prediction_times) / len(_prediction_times), 2)

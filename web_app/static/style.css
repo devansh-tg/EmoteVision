@@ -404,11 +404,132 @@ h1 {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 30px rgba(0, 0, 0, 0.18);
 }
 
+.feed-state {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(199, 243, 212, 0.18);
+  border-radius: 999px;
+  background: rgba(7, 10, 9, 0.72);
+  color: var(--accent-2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(10px);
+}
+
+.feed-state::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(167, 232, 189, 0.12);
+  content: "";
+}
+
+.feed-state[data-state="warning"] {
+  color: var(--warn);
+}
+
+.feed-state[data-state="warning"]::before {
+  background: var(--warn);
+  box-shadow: 0 0 0 4px rgba(233, 181, 107, 0.12);
+}
+
+.feed-state[data-state="error"] {
+  color: var(--danger);
+}
+
+.feed-state[data-state="error"]::before {
+  background: var(--danger);
+  box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.12);
+}
+
 #video-feed {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+/* Premium live-workspace treatment */
+.topbar {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.025), 0 14px 34px rgba(0, 0, 0, 0.14);
+}
+
+.overview {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(167, 232, 189, 0.12), transparent 22rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 92%, transparent), var(--surface-2));
+  box-shadow: var(--shadow);
+}
+
+.overview::after {
+  position: absolute;
+  right: 8%;
+  bottom: -90px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(167, 232, 189, 0.14);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(167, 232, 189, 0.025), 0 0 0 48px rgba(167, 232, 189, 0.02);
+  content: "";
+  pointer-events: none;
+}
+
+.metric-card,
+.panel {
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card {
+  background: linear-gradient(145deg, var(--surface), color-mix(in srgb, var(--surface-2) 76%, var(--surface)));
+}
+
+.panel {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 96%, transparent), var(--surface-2));
+}
+
+.video-frame {
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.btn,
+.icon-btn,
+.nav a {
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.btn:hover,
+.icon-btn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+}
+
+@media (max-width: 720px) {
+  .overview {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .feed-state {
+    left: 12px;
+    bottom: 12px;
+    max-width: calc(100% - 24px);
+    font-size: 10px;
+  }
 }
 
 .video-frame::after {

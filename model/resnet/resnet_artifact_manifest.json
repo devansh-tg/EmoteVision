@@ -1,0 +1,82 @@
+{
+  "resnet.h5": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet.h5",
+    "size_bytes": 101332808,
+    "sha256": "78e7adf76a8b56088c8b42e4d0aa91158c6b6db3871f7445d0d12534e05d4022"
+  },
+  "resnet.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet.weights.h5",
+    "size_bytes": 101227536,
+    "sha256": "1167b66a57cf0533b47fbfbe60931f6f063331ae90538a7dff34e3a8ab2e54ba"
+  },
+  "resnet_best.h5": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_best.h5",
+    "size_bytes": 101332808,
+    "sha256": "a3bbb059f039a5a28012cd196cf9bd30f8d25de6ee98a1c21f32d2c2892267b1"
+  },
+  "resnet_best.pth": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_best.pth",
+    "size_bytes": 96581603,
+    "sha256": "e186d27460954bdfe7050efb4e7d9840901dbda00c54a6b25c78dc13bb09c979"
+  },
+  "resnet_best.weights.h5": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_best.weights.h5",
+    "size_bytes": 101227536,
+    "sha256": "d82975f28ada42516bdf3c454b551d44dbb5299fb09a938f69b5fce4386ed7ae"
+  },
+  "resnet_checkpoint.h5": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_checkpoint.h5",
+    "size_bytes": 101332808,
+    "sha256": "13c84736e5a5dedac839cd83ea228c023e1b02b083d88c34e6b430f8249ff6b6"
+  },
+  "resnet_classification_report.json": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_classification_report.json",
+    "size_bytes": 1366,
+    "sha256": "4150d844da8ad1fafa5aa97a14eabfc2324a1ac6507558e2ce249a442ac20f3d"
+  },
+  "resnet_classification_report.txt": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_classification_report.txt",
+    "size_bytes": 596,
+    "sha256": "8a2d19cf10784e70417c6ac7151a00ab7679a3bdb98462b3c864bfc249328474"
+  },
+  "resnet_confusion_matrix.csv": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_confusion_matrix.csv",
+    "size_bytes": 161,
+    "sha256": "b575c2643f597c7b727fd2edfbede2e6652741b04dc5e4be20125c64e2950e03"
+  },
+  "resnet_confusion_matrix.png": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_confusion_matrix.png",
+    "size_bytes": 114938,
+    "sha256": "8054948d574ee9d6ca6835048ae3b7de7bcead659988c390496d00a170e58282"
+  },
+  "resnet_metrics.csv": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_metrics.csv",
+    "size_bytes": 285,
+    "sha256": "7c87d8bee859ee7871cda0984930aeca8abfdc0c9535102b7d212752578fc081"
+  },
+  "resnet_metrics.json": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_metrics.json",
+    "size_bytes": 313,
+    "sha256": "1ac2b0fce47c3327b24fc0b94ef898d2c5e3f20f01171788733adfd5196b0055"
+  },
+  "resnet_model_meta.json": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_model_meta.json",
+    "size_bytes": 41961,
+    "sha256": "69527bfb6d61a2aa0f65633bc66e0e4c5667db941a949d3da3ac813ea6268292"
+  },
+  "resnet_training_history.csv": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_training_history.csv",
+    "size_bytes": 4711,
+    "sha256": "90e9c1e1e07b651b0deb16eaabe1df40a94b494a9011395706bb667084befbb0"
+  },
+  "resnet_training_history.json": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_training_history.json",
+    "size_bytes": 5736,
+    "sha256": "14804101ed429ebc9ff0e520e216beec346f7c62eaef978bd5e37142497e9640"
+  },
+  "resnet_training_history.png": {
+    "path": "/kaggle/working/emotevision_outputs/resnet/resnet_training_history.png",
+    "size_bytes": 106861,
+    "sha256": "dfd78fbee9ba6ffc1a79085e137d154ff765d28772147e3cd12fe8ad6318f03d"
+  }
+}

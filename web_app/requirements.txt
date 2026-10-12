@@ -7,7 +7,8 @@ werkzeug>=3.0.0
 python-dotenv>=1.0.0
 
 # Deep learning
-tensorflow>=2.15.0
+tensorflow==2.20.0
+optree>=0.13.0
 
 # Computer vision
 opencv-python>=4.8.0

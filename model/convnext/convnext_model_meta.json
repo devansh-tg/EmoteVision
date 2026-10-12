@@ -1,0 +1,2321 @@
+{
+  "schema_version": "1.0",
+  "experiment_name": "FER2013 legacy directory split feature extraction",
+  "model_family": "convnext",
+  "display_name": "ConvNeXtSmall",
+  "architecture": {
+    "keras_application": "keras.src.applications.convnext.ConvNeXtSmall",
+    "model_name": "convnext_feature_extractor",
+    "input_shape": [
+      null,
+      96,
+      96,
+      3
+    ],
+    "output_shape": [
+      null,
+      7
+    ],
+    "input_channels": 3,
+    "input_color_mode": "rgb",
+    "input_size": [
+      96,
+      96
+    ],
+    "class_count": 7,
+    "layers": [
+      {
+        "name": "input_layer_2",
+        "type": "InputLayer",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_prestem_normalization",
+        "type": "Normalization",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stem",
+        "type": "Sequential",
+        "trainable": false,
+        "parameter_count": 4896,
+        "output_shape": [
+          null,
+          24,
+          24,
+          96
+        ]
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 4800,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 37248,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 36960,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 96,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_0_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 4800,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 37248,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 36960,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 96,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_1_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 4800,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 37248,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 36960,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 96,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_0_block_2_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_downsampling_block_0",
+        "type": "Sequential",
+        "trainable": false,
+        "parameter_count": 74112,
+        "output_shape": [
+          null,
+          12,
+          12,
+          192
+        ]
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 148224,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 147648,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_0_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 148224,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 147648,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_1_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 9600,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 148224,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 147648,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 192,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_1_block_2_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_downsampling_block_1",
+        "type": "Sequential",
+        "trainable": false,
+        "parameter_count": 295680,
+        "output_shape": [
+          null,
+          6,
+          6,
+          384
+        ]
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_0_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_1_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_2_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_3_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_4_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_5_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_6_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_7_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_8_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_9_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_10_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_11_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_12_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_13_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_14_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_15_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_16_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_17_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_18_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_19_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_20_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_21_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_22_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_23_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_24_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_25_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 19200,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 591360,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 590208,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 384,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_2_block_26_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_downsampling_block_2",
+        "type": "Sequential",
+        "trainable": false,
+        "parameter_count": 1181184,
+        "output_shape": [
+          null,
+          3,
+          3,
+          768
+        ]
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 1536,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2362368,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2360064,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_0_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 1536,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2362368,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2360064,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_1_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_depthwise_conv",
+        "type": "Conv2D",
+        "trainable": false,
+        "parameter_count": 38400,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_layernorm",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 1536,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_pointwise_conv_1",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2362368,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_gelu",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_pointwise_conv_2",
+        "type": "Dense",
+        "trainable": false,
+        "parameter_count": 2360064,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_layer_scale",
+        "type": "LayerScale",
+        "trainable": false,
+        "parameter_count": 768,
+        "output_shape": null
+      },
+      {
+        "name": "convnext_small_stage_3_block_2_identity",
+        "type": "Activation",
+        "trainable": false,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "layer_normalization",
+        "type": "LayerNormalization",
+        "trainable": false,
+        "parameter_count": 1536,
+        "output_shape": null
+      },
+      {
+        "name": "global_average_pooling",
+        "type": "GlobalAveragePooling2D",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "head_batch_normalization",
+        "type": "BatchNormalization",
+        "trainable": true,
+        "parameter_count": 3072,
+        "output_shape": null
+      },
+      {
+        "name": "head_dropout",
+        "type": "Dropout",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "head_dense",
+        "type": "Dense",
+        "trainable": true,
+        "parameter_count": 196864,
+        "output_shape": null
+      },
+      {
+        "name": "head_dense_dropout",
+        "type": "Dropout",
+        "trainable": true,
+        "parameter_count": 0,
+        "output_shape": null
+      },
+      {
+        "name": "emotion",
+        "type": "Dense",
+        "trainable": true,
+        "parameter_count": 1799,
+        "output_shape": null
+      }
+    ]
+  },
+  "training_method": "feature_extraction",
+  "backbone_weights": "imagenet",
+  "backbone_trainable": false,
+  "trainable_layers": [
+    "global_average_pooling",
+    "head_batch_normalization",
+    "head_dropout",
+    "head_dense",
+    "head_dense_dropout",
+    "emotion"
+  ],
+  "non_trainable_layers": [
+    "input_layer_2",
+    "convnext_small_prestem_normalization",
+    "convnext_small_stem",
+    "convnext_small_stage_0_block_0_depthwise_conv",
+    "convnext_small_stage_0_block_0_layernorm",
+    "convnext_small_stage_0_block_0_pointwise_conv_1",
+    "convnext_small_stage_0_block_0_gelu",
+    "convnext_small_stage_0_block_0_pointwise_conv_2",
+    "convnext_small_stage_0_block_0_layer_scale",
+    "convnext_small_stage_0_block_0_identity",
+    "convnext_small_stage_0_block_1_depthwise_conv",
+    "convnext_small_stage_0_block_1_layernorm",
+    "convnext_small_stage_0_block_1_pointwise_conv_1",
+    "convnext_small_stage_0_block_1_gelu",
+    "convnext_small_stage_0_block_1_pointwise_conv_2",
+    "convnext_small_stage_0_block_1_layer_scale",
+    "convnext_small_stage_0_block_1_identity",
+    "convnext_small_stage_0_block_2_depthwise_conv",
+    "convnext_small_stage_0_block_2_layernorm",
+    "convnext_small_stage_0_block_2_pointwise_conv_1",
+    "convnext_small_stage_0_block_2_gelu",
+    "convnext_small_stage_0_block_2_pointwise_conv_2",
+    "convnext_small_stage_0_block_2_layer_scale",
+    "convnext_small_stage_0_block_2_identity",
+    "convnext_small_downsampling_block_0",
+    "convnext_small_stage_1_block_0_depthwise_conv",
+    "convnext_small_stage_1_block_0_layernorm",
+    "convnext_small_stage_1_block_0_pointwise_conv_1",
+    "convnext_small_stage_1_block_0_gelu",
+    "convnext_small_stage_1_block_0_pointwise_conv_2",
+    "convnext_small_stage_1_block_0_layer_scale",
+    "convnext_small_stage_1_block_0_identity",
+    "convnext_small_stage_1_block_1_depthwise_conv",
+    "convnext_small_stage_1_block_1_layernorm",
+    "convnext_small_stage_1_block_1_pointwise_conv_1",
+    "convnext_small_stage_1_block_1_gelu",
+    "convnext_small_stage_1_block_1_pointwise_conv_2",
+    "convnext_small_stage_1_block_1_layer_scale",
+    "convnext_small_stage_1_block_1_identity",
+    "convnext_small_stage_1_block_2_depthwise_conv",
+    "convnext_small_stage_1_block_2_layernorm",
+    "convnext_small_stage_1_block_2_pointwise_conv_1",
+    "convnext_small_stage_1_block_2_gelu",
+    "convnext_small_stage_1_block_2_pointwise_conv_2",
+    "convnext_small_stage_1_block_2_layer_scale",
+    "convnext_small_stage_1_block_2_identity",
+    "convnext_small_downsampling_block_1",
+    "convnext_small_stage_2_block_0_depthwise_conv",
+    "convnext_small_stage_2_block_0_layernorm",
+    "convnext_small_stage_2_block_0_pointwise_conv_1",
+    "convnext_small_stage_2_block_0_gelu",
+    "convnext_small_stage_2_block_0_pointwise_conv_2",
+    "convnext_small_stage_2_block_0_layer_scale",
+    "convnext_small_stage_2_block_0_identity",
+    "convnext_small_stage_2_block_1_depthwise_conv",
+    "convnext_small_stage_2_block_1_layernorm",
+    "convnext_small_stage_2_block_1_pointwise_conv_1",
+    "convnext_small_stage_2_block_1_gelu",
+    "convnext_small_stage_2_block_1_pointwise_conv_2",
+    "convnext_small_stage_2_block_1_layer_scale",
+    "convnext_small_stage_2_block_1_identity",
+    "convnext_small_stage_2_block_2_depthwise_conv",
+    "convnext_small_stage_2_block_2_layernorm",
+    "convnext_small_stage_2_block_2_pointwise_conv_1",
+    "convnext_small_stage_2_block_2_gelu",
+    "convnext_small_stage_2_block_2_pointwise_conv_2",
+    "convnext_small_stage_2_block_2_layer_scale",
+    "convnext_small_stage_2_block_2_identity",
+    "convnext_small_stage_2_block_3_depthwise_conv",
+    "convnext_small_stage_2_block_3_layernorm",
+    "convnext_small_stage_2_block_3_pointwise_conv_1",
+    "convnext_small_stage_2_block_3_gelu",
+    "convnext_small_stage_2_block_3_pointwise_conv_2",
+    "convnext_small_stage_2_block_3_layer_scale",
+    "convnext_small_stage_2_block_3_identity",
+    "convnext_small_stage_2_block_4_depthwise_conv",
+    "convnext_small_stage_2_block_4_layernorm",
+    "convnext_small_stage_2_block_4_pointwise_conv_1",
+    "convnext_small_stage_2_block_4_gelu",
+    "convnext_small_stage_2_block_4_pointwise_conv_2",
+    "convnext_small_stage_2_block_4_layer_scale",
+    "convnext_small_stage_2_block_4_identity",
+    "convnext_small_stage_2_block_5_depthwise_conv",
+    "convnext_small_stage_2_block_5_layernorm",
+    "convnext_small_stage_2_block_5_pointwise_conv_1",
+    "convnext_small_stage_2_block_5_gelu",
+    "convnext_small_stage_2_block_5_pointwise_conv_2",
+    "convnext_small_stage_2_block_5_layer_scale",
+    "convnext_small_stage_2_block_5_identity",
+    "convnext_small_stage_2_block_6_depthwise_conv",
+    "convnext_small_stage_2_block_6_layernorm",
+    "convnext_small_stage_2_block_6_pointwise_conv_1",
+    "convnext_small_stage_2_block_6_gelu",
+    "convnext_small_stage_2_block_6_pointwise_conv_2",
+    "convnext_small_stage_2_block_6_layer_scale",
+    "convnext_small_stage_2_block_6_identity",
+    "convnext_small_stage_2_block_7_depthwise_conv",
+    "convnext_small_stage_2_block_7_layernorm",
+    "convnext_small_stage_2_block_7_pointwise_conv_1",
+    "convnext_small_stage_2_block_7_gelu",
+    "convnext_small_stage_2_block_7_pointwise_conv_2",
+    "convnext_small_stage_2_block_7_layer_scale",
+    "convnext_small_stage_2_block_7_identity",
+    "convnext_small_stage_2_block_8_depthwise_conv",
+    "convnext_small_stage_2_block_8_layernorm",
+    "convnext_small_stage_2_block_8_pointwise_conv_1",
+    "convnext_small_stage_2_block_8_gelu",
+    "convnext_small_stage_2_block_8_pointwise_conv_2",
+    "convnext_small_stage_2_block_8_layer_scale",
+    "convnext_small_stage_2_block_8_identity",
+    "convnext_small_stage_2_block_9_depthwise_conv",
+    "convnext_small_stage_2_block_9_layernorm",
+    "convnext_small_stage_2_block_9_pointwise_conv_1",
+    "convnext_small_stage_2_block_9_gelu",
+    "convnext_small_stage_2_block_9_pointwise_conv_2",
+    "convnext_small_stage_2_block_9_layer_scale",
+    "convnext_small_stage_2_block_9_identity",
+    "convnext_small_stage_2_block_10_depthwise_conv",
+    "convnext_small_stage_2_block_10_layernorm",
+    "convnext_small_stage_2_block_10_pointwise_conv_1",
+    "convnext_small_stage_2_block_10_gelu",
+    "convnext_small_stage_2_block_10_pointwise_conv_2",
+    "convnext_small_stage_2_block_10_layer_scale",
+    "convnext_small_stage_2_block_10_identity",
+    "convnext_small_stage_2_block_11_depthwise_conv",
+    "convnext_small_stage_2_block_11_layernorm",
+    "convnext_small_stage_2_block_11_pointwise_conv_1",
+    "convnext_small_stage_2_block_11_gelu",
+    "convnext_small_stage_2_block_11_pointwise_conv_2",
+    "convnext_small_stage_2_block_11_layer_scale",
+    "convnext_small_stage_2_block_11_identity",
+    "convnext_small_stage_2_block_12_depthwise_conv",
+    "convnext_small_stage_2_block_12_layernorm",
+    "convnext_small_stage_2_block_12_pointwise_conv_1",
+    "convnext_small_stage_2_block_12_gelu",
+    "convnext_small_stage_2_block_12_pointwise_conv_2",
+    "convnext_small_stage_2_block_12_layer_scale",
+    "convnext_small_stage_2_block_12_identity",
+    "convnext_small_stage_2_block_13_depthwise_conv",
+    "convnext_small_stage_2_block_13_layernorm",
+    "convnext_small_stage_2_block_13_pointwise_conv_1",
+    "convnext_small_stage_2_block_13_gelu",
+    "convnext_small_stage_2_block_13_pointwise_conv_2",
+    "convnext_small_stage_2_block_13_layer_scale",
+    "convnext_small_stage_2_block_13_identity",
+    "convnext_small_stage_2_block_14_depthwise_conv",
+    "convnext_small_stage_2_block_14_layernorm",
+    "convnext_small_stage_2_block_14_pointwise_conv_1",
+    "convnext_small_stage_2_block_14_gelu",
+    "convnext_small_stage_2_block_14_pointwise_conv_2",
+    "convnext_small_stage_2_block_14_layer_scale",
+    "convnext_small_stage_2_block_14_identity",
+    "convnext_small_stage_2_block_15_depthwise_conv",
+    "convnext_small_stage_2_block_15_layernorm",
+    "convnext_small_stage_2_block_15_pointwise_conv_1",
+    "convnext_small_stage_2_block_15_gelu",
+    "convnext_small_stage_2_block_15_pointwise_conv_2",
+    "convnext_small_stage_2_block_15_layer_scale",
+    "convnext_small_stage_2_block_15_identity",
+    "convnext_small_stage_2_block_16_depthwise_conv",
+    "convnext_small_stage_2_block_16_layernorm",
+    "convnext_small_stage_2_block_16_pointwise_conv_1",
+    "convnext_small_stage_2_block_16_gelu",
+    "convnext_small_stage_2_block_16_pointwise_conv_2",
+    "convnext_small_stage_2_block_16_layer_scale",
+    "convnext_small_stage_2_block_16_identity",
+    "convnext_small_stage_2_block_17_depthwise_conv",
+    "convnext_small_stage_2_block_17_layernorm",
+    "convnext_small_stage_2_block_17_pointwise_conv_1",
+    "convnext_small_stage_2_block_17_gelu",
+    "convnext_small_stage_2_block_17_pointwise_conv_2",
+    "convnext_small_stage_2_block_17_layer_scale",
+    "convnext_small_stage_2_block_17_identity",
+    "convnext_small_stage_2_block_18_depthwise_conv",
+    "convnext_small_stage_2_block_18_layernorm",
+    "convnext_small_stage_2_block_18_pointwise_conv_1",
+    "convnext_small_stage_2_block_18_gelu",
+    "convnext_small_stage_2_block_18_pointwise_conv_2",
+    "convnext_small_stage_2_block_18_layer_scale",
+    "convnext_small_stage_2_block_18_identity",
+    "convnext_small_stage_2_block_19_depthwise_conv",
+    "convnext_small_stage_2_block_19_layernorm",
+    "convnext_small_stage_2_block_19_pointwise_conv_1",
+    "convnext_small_stage_2_block_19_gelu",
+    "convnext_small_stage_2_block_19_pointwise_conv_2",
+    "convnext_small_stage_2_block_19_layer_scale",
+    "convnext_small_stage_2_block_19_identity",
+    "convnext_small_stage_2_block_20_depthwise_conv",
+    "convnext_small_stage_2_block_20_layernorm",
+    "convnext_small_stage_2_block_20_pointwise_conv_1",
+    "convnext_small_stage_2_block_20_gelu",
+    "convnext_small_stage_2_block_20_pointwise_conv_2",
+    "convnext_small_stage_2_block_20_layer_scale",
+    "convnext_small_stage_2_block_20_identity",
+    "convnext_small_stage_2_block_21_depthwise_conv",
+    "convnext_small_stage_2_block_21_layernorm",
+    "convnext_small_stage_2_block_21_pointwise_conv_1",
+    "convnext_small_stage_2_block_21_gelu",
+    "convnext_small_stage_2_block_21_pointwise_conv_2",
+    "convnext_small_stage_2_block_21_layer_scale",
+    "convnext_small_stage_2_block_21_identity",
+    "convnext_small_stage_2_block_22_depthwise_conv",
+    "convnext_small_stage_2_block_22_layernorm",
+    "convnext_small_stage_2_block_22_pointwise_conv_1",
+    "convnext_small_stage_2_block_22_gelu",
+    "convnext_small_stage_2_block_22_pointwise_conv_2",
+    "convnext_small_stage_2_block_22_layer_scale",
+    "convnext_small_stage_2_block_22_identity",
+    "convnext_small_stage_2_block_23_depthwise_conv",
+    "convnext_small_stage_2_block_23_layernorm",
+    "convnext_small_stage_2_block_23_pointwise_conv_1",
+    "convnext_small_stage_2_block_23_gelu",
+    "convnext_small_stage_2_block_23_pointwise_conv_2",
+    "convnext_small_stage_2_block_23_layer_scale",
+    "convnext_small_stage_2_block_23_identity",
+    "convnext_small_stage_2_block_24_depthwise_conv",
+    "convnext_small_stage_2_block_24_layernorm",
+    "convnext_small_stage_2_block_24_pointwise_conv_1",
+    "convnext_small_stage_2_block_24_gelu",
+    "convnext_small_stage_2_block_24_pointwise_conv_2",
+    "convnext_small_stage_2_block_24_layer_scale",
+    "convnext_small_stage_2_block_24_identity",
+    "convnext_small_stage_2_block_25_depthwise_conv",
+    "convnext_small_stage_2_block_25_layernorm",
+    "convnext_small_stage_2_block_25_pointwise_conv_1",
+    "convnext_small_stage_2_block_25_gelu",
+    "convnext_small_stage_2_block_25_pointwise_conv_2",
+    "convnext_small_stage_2_block_25_layer_scale",
+    "convnext_small_stage_2_block_25_identity",
+    "convnext_small_stage_2_block_26_depthwise_conv",
+    "convnext_small_stage_2_block_26_layernorm",
+    "convnext_small_stage_2_block_26_pointwise_conv_1",
+    "convnext_small_stage_2_block_26_gelu",
+    "convnext_small_stage_2_block_26_pointwise_conv_2",
+    "convnext_small_stage_2_block_26_layer_scale",
+    "convnext_small_stage_2_block_26_identity",
+    "convnext_small_downsampling_block_2",
+    "convnext_small_stage_3_block_0_depthwise_conv",
+    "convnext_small_stage_3_block_0_layernorm",
+    "convnext_small_stage_3_block_0_pointwise_conv_1",
+    "convnext_small_stage_3_block_0_gelu",
+    "convnext_small_stage_3_block_0_pointwise_conv_2",
+    "convnext_small_stage_3_block_0_layer_scale",
+    "convnext_small_stage_3_block_0_identity",
+    "convnext_small_stage_3_block_1_depthwise_conv",
+    "convnext_small_stage_3_block_1_layernorm",
+    "convnext_small_stage_3_block_1_pointwise_conv_1",
+    "convnext_small_stage_3_block_1_gelu",
+    "convnext_small_stage_3_block_1_pointwise_conv_2",
+    "convnext_small_stage_3_block_1_layer_scale",
+    "convnext_small_stage_3_block_1_identity",
+    "convnext_small_stage_3_block_2_depthwise_conv",
+    "convnext_small_stage_3_block_2_layernorm",
+    "convnext_small_stage_3_block_2_pointwise_conv_1",
+    "convnext_small_stage_3_block_2_gelu",
+    "convnext_small_stage_3_block_2_pointwise_conv_2",
+    "convnext_small_stage_3_block_2_layer_scale",
+    "convnext_small_stage_3_block_2_identity",
+    "layer_normalization"
+  ],
+  "class_mapping": {
+    "angry": 0,
+    "disgust": 1,
+    "fear": 2,
+    "happy": 3,
+    "neutral": 4,
+    "sad": 5,
+    "surprise": 6
+  },
+  "dataset": {
+    "train_samples": 28709,
+    "validation_samples": 7178,
+    "train_batches_per_epoch": 449,
+    "validation_batches": 113,
+    "class_counts_train": {
+      "angry": 3995,
+      "disgust": 436,
+      "fear": 4097,
+      "happy": 7215,
+      "neutral": 4965,
+      "sad": 4830,
+      "surprise": 3171
+    },
+    "class_counts_validation": {
+      "angry": 958,
+      "disgust": 111,
+      "fear": 1024,
+      "happy": 1774,
+      "neutral": 1233,
+      "sad": 1247,
+      "surprise": 831
+    },
+    "dataset_root": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data",
+    "train_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/train",
+    "validation_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/test",
+    "test_dir": "/kaggle/input/datasets/devanshtyagi824/emotion-detection-dataset/data/test",
+    "protocol": "legacy_train_directory_and_test_directory_as_validation",
+    "test_set_used_for_model_selection": true
+  },
+  "preprocessing": {
+    "preprocessing_function": "keras.src.applications.convnext.preprocess_input",
+    "image_resizing": "96x96",
+    "color_mode": "rgb",
+    "augmentation": "none",
+    "normalization": "architecture-specific preprocess_input"
+  },
+  "training_configuration": {
+    "requested_epochs": 80,
+    "epochs_trained": 80,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "loss": "categorical_crossentropy",
+    "class_weights": {
+      "0": 1.0266046844269623,
+      "1": 9.406618610747051,
+      "2": 1.0010460615781582,
+      "3": 0.5684387684387684,
+      "4": 0.8260394187886635,
+      "5": 0.8491274770777877,
+      "6": 1.293372978330405
+    },
+    "early_stopping": {
+      "monitor": "val_accuracy",
+      "patience": 12,
+      "restore_best_weights": true,
+      "mode": "max"
+    },
+    "reduce_learning_rate": {
+      "monitor": "val_loss",
+      "patience": 5,
+      "factor": 0.5,
+      "min_learning_rate": 1e-07
+    },
+    "checkpoint_selection": "best validation accuracy"
+  },
+  "seed": 42,
+  "random_seed": {
+    "python": 42,
+    "numpy": 42,
+    "tensorflow": 42
+  },
+  "environment": {
+    "python_version": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "tensorflow_version": "2.20.0",
+    "numpy_version": "2.1.3",
+    "matplotlib_version": "3.10.0",
+    "cuda_visible_devices": null,
+    "gpu_devices": [
+      "/physical_device:GPU:0",
+      "/physical_device:GPU:1"
+    ],
+    "cpu_devices": [
+      "/physical_device:CPU:0"
+    ]
+  },
+  "parameters": {
+    "total": 49656423,
+    "trainable": 200199,
+    "non_trainable": 49456224
+  },
+  "training_seconds": 4058.506,
+  "best_epoch": 79,
+  "best_validation_metrics": {
+    "epoch": 79,
+    "val_accuracy": 0.49108386039733887,
+    "val_loss": 1.3610258102416992,
+    "accuracy": 0.5051377415657043,
+    "loss": 1.1270509958267212
+  },
+  "last_epoch_metrics": {
+    "accuracy": 0.5016545057296753,
+    "loss": 1.1345993280410767,
+    "val_accuracy": 0.4909445643424988,
+    "val_loss": 1.3618786334991455,
+    "learning_rate": 6.25000029685907e-05
+  },
+  "metrics": {
+    "accuracy": 0.4910838673725272,
+    "balanced_accuracy": 0.5045764028412928,
+    "precision_macro": 0.4727067026589576,
+    "recall_macro": 0.5045764028412928,
+    "f1_macro": 0.4832046679909369,
+    "precision_weighted": 0.49560863040637093,
+    "recall_weighted": 0.4910838673725272,
+    "f1_weighted": 0.4899462522116388
+  },
+  "artifacts": {
+    "best_model": "/kaggle/working/emotevision_outputs/convnext/convnext_best.h5",
+    "best_weights": "/kaggle/working/emotevision_outputs/convnext/convnext_best.weights.h5",
+    "best_pytorch_weights": "/kaggle/working/emotevision_outputs/convnext/convnext_best.pth",
+    "final_model": "/kaggle/working/emotevision_outputs/convnext/convnext.h5",
+    "final_weights": "/kaggle/working/emotevision_outputs/convnext/convnext.weights.h5",
+    "checkpoint_model": "/kaggle/working/emotevision_outputs/convnext/convnext_checkpoint.h5",
+    "classification_report_json": "/kaggle/working/emotevision_outputs/convnext/convnext_classification_report.json",
+    "classification_report_text": "/kaggle/working/emotevision_outputs/convnext/convnext_classification_report.txt",
+    "metrics_json": "/kaggle/working/emotevision_outputs/convnext/convnext_metrics.json",
+    "metrics_csv": "/kaggle/working/emotevision_outputs/convnext/convnext_metrics.csv",
+    "confusion_matrix_csv": "/kaggle/working/emotevision_outputs/convnext/convnext_confusion_matrix.csv",
+    "confusion_matrix_png": "/kaggle/working/emotevision_outputs/convnext/convnext_confusion_matrix.png",
+    "training_history_json": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.json",
+    "training_history_csv": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.csv",
+    "training_history_png": "/kaggle/working/emotevision_outputs/convnext/convnext_training_history.png"
+  }
+}

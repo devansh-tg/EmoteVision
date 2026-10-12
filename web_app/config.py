@@ -43,9 +43,9 @@ def _env_float(name: str, default: float, *aliases: str) -> float:
 
 
 # Paths
-MODEL_PATH = WEB_APP_DIR / _env("EMOTEVISION_MODEL", "../models/custom_cnn/model.h5")
-TFLITE_PATH = WEB_APP_DIR / _env("EMOTEVISION_TFLITE", "../models/custom_cnn/model.tflite")
-META_PATH = WEB_APP_DIR / _env("EMOTEVISION_META", "../models/custom_cnn/model_meta.json")
+MODEL_PATH = WEB_APP_DIR / _env("EMOTEVISION_MODEL", "../model/custom_cnn/model.h5")
+TFLITE_PATH = WEB_APP_DIR / _env("EMOTEVISION_TFLITE", "../model/custom_cnn/model.tflite")
+META_PATH = WEB_APP_DIR / _env("EMOTEVISION_META", "../model/custom_cnn/model_meta.json")
 EMOJI_DIR = WEB_APP_DIR / "emojis"
 CASCADE_PATH = _env("EMOTEVISION_CASCADE", None)
 

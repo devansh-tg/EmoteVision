@@ -50,6 +50,13 @@ function setSocketBadge(text) {
     if (el) el.textContent = text;
 }
 
+function setFeedState(text, state = "active") {
+    const el = document.getElementById("feed-state");
+    if (!el) return;
+    el.textContent = text;
+    el.dataset.state = state;
+}
+
 function formatUptime(seconds) {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -334,24 +341,36 @@ function startRestPolling() {
     if (restPollTimer) return;
 
     const poll = async () => {
+        let delay = 1200;
         try {
             const payload = await fetchJson("/api/predict", {}, 2500);
             const data = normalizeRestPrediction(payload);
             if (data) handleEmotionUpdate(data);
-            setSocketBadge("REST polling");
+            setSocketBadge("Inference online");
+            setFeedState("Live camera", "active");
         } catch (error) {
-            setStatus("Reconnecting", "warning");
-            setSocketBadge("Camera retrying");
+            setStatus("Camera online", "warning");
+            setSocketBadge("Inference unavailable");
+            setFeedState("Camera live · inference unavailable", "warning");
+            delay = 2500;
         }
+        restPollTimer = window.setTimeout(poll, delay);
     };
 
     poll();
-    restPollTimer = window.setInterval(poll, 1000);
 }
 
 function handleEmotionUpdate(data) {
+    if (data.error) {
+        setStatus(data.error, "error");
+        setSocketBadge("Inference unavailable");
+        setFeedState("Camera live · inference unavailable", "warning");
+        updateStats(data);
+        return;
+    }
     if (data.emotion) {
         setStatus("Face detected", "active");
+        setFeedState("Live camera · face detected", "active");
         updateEmotionDisplay(data);
         const probs = data.smoothed_probs || data.probabilities || {};
         updateProbabilities(probs);
@@ -360,39 +379,15 @@ function handleEmotionUpdate(data) {
         ensureTrendPump();
     } else {
         setStatus("Scanning", "warning");
+        setFeedState("Live camera · scanning", "active");
     }
     updateStats(data);
 }
 
 function initSocket() {
-    if (typeof io === "undefined") {
-        setStatus("Polling camera", "warning");
-        startRestPolling();
-        return;
-    }
-
-    const socket = io({
-        transports: ["websocket", "polling"],
-        reconnectionAttempts: 10,
-        reconnectionDelay: 1000,
-    });
-
-    socket.on("connect", () => {
-        setStatus("Live", "active");
-        setSocketBadge("Socket connected");
-    });
-
-    socket.on("disconnect", () => {
-        setStatus("Disconnected", "error");
-        setSocketBadge("Socket offline");
-    });
-
-    socket.on("connect_error", () => {
-        setStatus("Reconnecting", "warning");
-        setSocketBadge("Retrying connection");
-    });
-
-    socket.on("emotion_update", handleEmotionUpdate);
+    setStatus("Camera online", "active");
+    setSocketBadge("Inference initializing");
+    startRestPolling();
 }
 
 async function initConfig() {
@@ -425,6 +420,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     wireButtons();
     initSocket();
     initStats();
+    const feed = document.getElementById("video-feed");
+    feed?.addEventListener("load", () => setFeedState("Live camera", "active"));
+    feed?.addEventListener("error", () => {
+        setStatus("Camera unavailable", "error");
+        setFeedState("Camera unavailable", "error");
+    });
 });
 
 document.addEventListener("keydown", (event) => {
