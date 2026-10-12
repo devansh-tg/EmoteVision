@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmoteVision | Real-Time Emotion Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script defer src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+    <header class="topbar">
+        <a class="brand" href="/" aria-label="EmoteVision home">
+            <span class="brand-mark">EV</span>
+            <span><strong>EmoteVision</strong><small>Emotion intelligence system</small></span>
+        </a>
+        <div class="topbar-center"><span class="section-kicker">Workspace</span><span class="topbar-title">Live session</span></div>
+        <nav class="nav" aria-label="Primary navigation">
+            <a href="/" class="active">Dashboard</a>
+            <a href="/about">Methodology</a>
+            <a href="https://github.com/devansh-tg/EmoteVision" target="_blank" rel="noreferrer">Source</a>
+        </nav>
+        <div class="toolbar">
+            <button class="btn btn-secondary" id="reset-btn" type="button">Reset</button>
+            <button class="btn" id="export-btn" type="button">Export session</button>
+            <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme">D</button>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <section class="overview">
+            <div>
+                <p class="eyebrow">Facial signal analysis <span class="eyebrow-line"></span></p>
+                <h1>Read the room<br><em>in real time.</em></h1>
+                <p class="lede">A focused view of live facial signals, model confidence, and session performance.</p>
+            </div>
+            <div class="system-status">
+                <span class="status-badge" id="status" data-state="warning"><span class="status-dot"></span>Connecting</span>
+                <span class="meta-pill" id="ws-badge">Socket initializing</span>
+            </div>
+        </section>
+
+        <section class="metrics-strip" aria-label="Runtime metrics">
+            <article class="metric-card metric-primary"><span class="metric-label">Current signal</span><strong id="emotion-name-metric">--</strong><small>Primary classification</small></article>
+            <article class="metric-card"><span class="metric-label">Confidence</span><strong id="confidence-metric">--</strong><small>Model certainty</small></article>
+            <article class="metric-card"><span class="metric-label">Inference</span><strong id="latency">--</strong><small>Average response</small></article>
+            <article class="metric-card"><span class="metric-label">Faces detected</span><strong id="faces">0</strong><small>In current frame</small></article>
+            <article class="metric-card"><span class="metric-label">Session uptime</span><strong id="uptime">0s</strong><small><span id="total-predictions">0</span> predictions</small></article>
+        </section>
+
+        <section class="dashboard-grid">
+            <article class="panel video-panel">
+                <div class="panel-header"><div><span class="panel-index">01 / LIVE INPUT</span><h2>Camera feed</h2><p>Annotated stream from the inference worker</p></div><span class="feed-indicator"><span class="status-dot"></span>Live</span></div>
+                <div class="video-frame"><img id="video-feed" src="{{ url_for('video_feed') }}" alt="Live webcam feed with emotion overlay"><span class="feed-corner top-left"></span><span class="feed-corner bottom-right"></span></div>
+            </article>
+
+            <article class="panel emotion-panel">
+                <div class="panel-header"><div><span class="panel-index">02 / PRIMARY OUTPUT</span><h2>Current emotion</h2><p>Highest-confidence classification</p></div></div>
+                <div class="emotion-summary"><div class="emotion-token" id="emotion-token">NE</div><div><span class="metric-label">Detected class</span><h3 id="emotion-name">Waiting</h3></div></div>
+                <div class="confidence-container"><div class="split-label"><span>Confidence</span><strong id="confidence-text">--</strong></div><div class="progress-track"><div class="progress-fill" id="confidence-fill"></div></div></div>
+                <div class="gauge-card"><svg class="engagement-gauge" viewBox="0 0 120 70" role="img" aria-label="Engagement gauge"><path class="gauge-track" d="M10 60 A50 50 0 0 1 110 60"></path><path class="gauge-fill" id="gauge-fill" d="M10 60 A50 50 0 0 1 110 60" stroke-dasharray="157" stroke-dashoffset="78.5"></path></svg><div><span class="metric-label">Engagement</span><strong><span id="engagement">50</span><small>/ 100</small></strong></div></div>
+            </article>
+        </section>
+
+        <section class="analysis-grid">
+            <article class="panel"><div class="panel-header"><div><span class="panel-index">03 / DISTRIBUTION</span><h2>Class probabilities</h2><p>Smoothed seven-class softmax distribution</p></div></div><div class="probabilities-container" id="probabilities"></div></article>
+            <article class="panel"><div class="panel-header"><div><span class="panel-index">04 / HISTORY</span><h2>Emotion trend</h2><p>Recent probability movement over this session</p></div></div><div class="chart-container"><canvas id="trend-chart" aria-label="Live emotion probability chart"></canvas></div></article>
+        </section>
+    </main>
+
+    <footer class="footer"><span>EmoteVision <i>·</i> Live analysis workspace</span><span id="footer-accuracy">Model accuracy unavailable</span></footer>
+</div>
+
+<script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -44,6 +44,27 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# Runtime logs
+*.log
+
+# Environment files
+.env
+*.env
+
+# Generated model/evaluation artifacts
+model_best.h5
+model_checkpoint.h5
+model.tflite
+confusion_matrix.png
+classification_report.txt
+training_history.png
+
+# Local datasets can be very large; keep only if intentionally versioned.
+# data/fer2013/
+
+# Model runs and generated reports.
+models/*/runs/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

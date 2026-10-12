@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology | EmoteVision</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+    <header class="topbar">
+        <a class="brand" href="/" aria-label="EmoteVision home">
+            <span class="brand-mark">EV</span>
+            <span>
+                <strong>EmoteVision</strong>
+                <small>Emotion Intelligence System</small>
+            </span>
+        </a>
+        <nav class="nav">
+            <a href="/">Dashboard</a>
+            <a href="/about" class="active">Methodology</a>
+            <a href="https://github.com/devansh-tg/EmoteVision" target="_blank" rel="noreferrer">Source</a>
+        </nav>
+        <div class="toolbar">
+            <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme">D</button>
+        </div>
+    </header>
+
+    <main class="workspace document-page">
+        <section class="overview">
+            <div>
+                <p class="eyebrow">Project report summary</p>
+                <h1>Methodology and system design</h1>
+                <p class="lede">A concise view of the model, pipeline, evaluation points, and deployment architecture used in EmoteVision.</p>
+            </div>
+        </section>
+
+        <section class="document-grid">
+            <article class="panel">
+                <h2>Problem Statement</h2>
+                <p>EmoteVision detects facial expressions from a live camera feed and classifies them into seven emotion classes: Angry, Disgust, Fear, Happy, Neutral, Sad, and Surprise.</p>
+            </article>
+
+            <article class="panel">
+                <h2>Technical Stack</h2>
+                <ul class="clean-list">
+                    <li>Python, Flask, and Flask-SocketIO for real-time backend delivery</li>
+                    <li>TensorFlow/Keras CNN for emotion classification</li>
+                    <li>OpenCV Haar Cascade with optional MediaPipe face detection</li>
+                    <li>Chart.js and vanilla JavaScript for live analytics</li>
+                </ul>
+            </article>
+
+            <article class="panel">
+                <h2>Model Pipeline</h2>
+                <ol class="clean-list numbered">
+                    <li>Read the latest frame from a shared camera buffer.</li>
+                    <li>Detect face bounding boxes in the frame.</li>
+                    <li>Crop, resize, normalize, and enhance the face region.</li>
+                    <li>Run 7-class softmax inference with the trained CNN.</li>
+                    <li>Smooth primary-face probabilities to reduce flicker.</li>
+                    <li>Publish results to the browser through Socket.IO.</li>
+                </ol>
+            </article>
+
+            <article class="panel">
+                <h2>Model Details</h2>
+                <dl class="spec-list">
+                    <div><dt>Input</dt><dd>48 x 48 grayscale face crop</dd></div>
+                    <div><dt>Architecture</dt><dd>4 convolutional blocks with BatchNorm and dropout</dd></div>
+                    <div><dt>Output</dt><dd>7-class softmax probability vector</dd></div>
+                    <div><dt>Dataset</dt><dd>FER-2013 formatted train/test image folders</dd></div>
+                </dl>
+            </article>
+
+            <article class="panel">
+                <h2>Evaluation Evidence</h2>
+                <p>For a stronger final submission, include generated artifacts from training: model metadata JSON, confusion matrix, classification report, and training-history plots.</p>
+            </article>
+
+            <article class="panel">
+                <h2>Future Scope</h2>
+                <ul class="clean-list">
+                    <li>Add image/video upload mode for camera-free demonstrations.</li>
+                    <li>Export TFLite for faster CPU inference.</li>
+                    <li>Add dataset bias discussion and consent/privacy notes.</li>
+                    <li>Introduce deterministic CI tests with mocked model inference.</li>
+                </ul>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span>EmoteVision final-year project build</span>
+        <span>TensorFlow, Flask-SocketIO, OpenCV</span>
+    </footer>
+</div>
+<script>
+(function () {
+    const saved = localStorage.getItem('emotevision-theme') || 'dark';
+    const button = document.getElementById('theme-toggle');
+    function apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (button) button.textContent = theme === 'dark' ? 'D' : 'L';
+    }
+    apply(saved);
+    if (button) {
+        button.addEventListener('click', function () {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('emotevision-theme', next);
+            apply(next);
+        });
+    }
+})();
+</script>
+</body>
+</html>

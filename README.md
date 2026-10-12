@@ -1,257 +1,118 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/TensorFlow-2.x-FF6F00?logo=tensorflow&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white" />
-  <img src="https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white" />
-  <img src="https://img.shields.io/badge/Socket.IO-4.x-010101?logo=socketdotio&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-green" />
-</p>
+# EmoteVision
 
-<h1 align="center">🎭 EmoteVision</h1>
-<p align="center">
-  <strong>Real-time facial emotion detection powered by deep learning</strong><br>
-  Live webcam analysis · WebSocket streaming · 3D glassmorphism UI
-</p>
+FER2013 facial-emotion recognition with a Flask/Socket.IO web application and
+four model research tracks: Custom CNN, EfficientNet-B0, ResNet50, and
+ConvNeXt-Small.
 
----
+## Repository structure
 
-## ✨ Features
+```text
+web_app/                         # Production web application and inference
+|-- app.py
+|-- config.py
+|-- requirements.txt
+|-- .env.example
+|-- utils/                       # Detector and frame-buffer code
+|-- templates/                   # Flask HTML templates
+|-- static/                      # Browser JavaScript and CSS
+|-- emojis/                      # Optional local assets
+|-- test.py                      # Local webcam utility
+|-- export_tflite.py             # TFLite conversion utility
+`-- tests/                       # Web/inference tests
 
-| Feature | Description |
-|---------|-------------|
-| **Real-Time Detection** | Detects 7 emotions (Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise) from webcam feed at ~15-30 FPS |
-| **Deep Learning CNN** | Custom 4-block convolutional neural network (64→128→256→512 filters) trained on 35,000+ images |
-| **WebSocket Streaming** | Flask-SocketIO pushes emotion data instantly — no polling, sub-100ms latency |
-| **3D Interactive UI** | Glassmorphic cards with mouse-tilt perspective, particle neural network background, neon glow system |
-| **Live Analytics** | Confidence bars, emotion trend chart (Chart.js), engagement gauge, inference timer |
-| **Session Management** | Export session data as CSV, reset stats, persistent theme preference |
-| **CLAHE Preprocessing** | Adaptive histogram equalization at inference for robust detection in varied lighting |
-| **EWA Smoothing** | Exponential weighted average reduces emotion flicker for stable real-time output |
-| **Dark / Light Theme** | Full theme toggle with localStorage persistence |
-| **Keyboard Shortcuts** | `R` = manual predict, `H` = home |
+training/
+`-- custom_cnn/
+    `-- train.py                 # Legacy split training entry point
 
----
+models/
+|-- custom_cnn/
+|   |-- model.h5                 # Production checkpoint
+|   `-- model_meta.json          # Production model metadata
+`-- efficientnet_b0/
+    |-- efficientnet_b0.h5
+    |-- efficientnet_b0_best.h5
+    |-- efficientnet_b0_checkpoint.h5
+    |-- efficientnet_b0_model_meta.json
+    |-- efficientnet_b0_classification_report.txt
+    |-- efficientnet_b0_confusion_matrix.png
+    `-- efficientnet_b0_training_history.png
 
-## 🏗️ Architecture
-
-```
-┌──────────────┐    WebSocket     ┌──────────────────┐
-│   Browser    │◄────────────────►│  Flask-SocketIO   │
-│  (JS + CSS)  │   emotion_update │    (app.py)       │
-│              │◄─── MJPEG ──────│                    │
-└──────────────┘                  └────────┬───────────┘
-                                           │
-                                  ┌────────▼───────────┐
-                                  │  EmotionDetector    │
-                                  │  (utils/detector.py)│
-                                  │                     │
-                                  │  ┌───────────────┐  │
-                                  │  │ Keras / TFLite│  │
-                                  │  │   CNN Model   │  │
-                                  │  └───────────────┘  │
-                                  │  ┌───────────────┐  │
-                                  │  │  Haar / Media- │  │
-                                  │  │  Pipe Face Det│  │
-                                  │  └───────────────┘  │
-                                  │  ┌───────────────┐  │
-                                  │  │ CLAHE + EWA   │  │
-                                  │  │ Preprocessing │  │
-                                  │  └───────────────┘  │
-                                  └─────────────────────┘
+data/
+`-- fer2013/
+    |-- train/<class>/*.jpg
+    `-- test/<class>/*.jpg
 ```
 
----
+The old `src/` folder has been replaced by feature-specific folders. The
+dataset and model artifacts are intentionally outside the web application.
 
-## 📁 Project Structure
+## Current experiment protocol
 
-```
-src/
-├── app.py                 # Flask-SocketIO server (routes, WebSocket, MJPEG stream)
-├── config.py              # Centralized configuration (env-var overridable)
-├── train.py               # Model training script (argparse, callbacks, confusion matrix)
-├── test.py                # Quick webcam test with emoji overlay
-├── export_tflite.py       # Convert .h5 → .tflite with optional quantization
-├── model.h5               # Trained Keras model (~68-70% val accuracy on FER-2013)
-├── requirements.txt       # Python dependencies
-├── .env.example           # Environment variable reference
-│
-├── utils/
-│   ├── __init__.py
-│   ├── detector.py        # EmotionDetector class (inference, smoothing, drawing)
-│   └── frame_buffer.py    # Thread-safe singleton camera buffer
-│
-├── static/
-│   ├── style.css          # 3D glassmorphism UI (dark/light themes)
-│   └── script.js          # Socket.IO client, Chart.js, particles, 3D tilt
-│
-├── templates/
-│   ├── index.html         # Main detection page
-│   └── about.html         # About / tech stack page
-│
-├── emojis/                # 7 emotion emoji PNGs
-│   ├── angry.png ... surprise.png
-│
-├── tests/
-│   ├── __init__.py
-│   └── test_detector.py   # Pytest unit tests for detector & config
-│
-└── data/                  # FER-2013 dataset (not included in repo)
-    ├── train/
-    │   ├── angry/ ... surprise/
-    └── test/
-        ├── angry/ ... surprise/
+The existing training workflow uses the original FER2013 directory split:
+
+```text
+Training:   data/fer2013/train
+Validation: data/fer2013/test
 ```
 
----
+This is a legacy validation protocol. It is useful for reproducing the
+existing project results, but it is not an untouched final-test evaluation
+because the original test directory is used during model selection. Use the
+same protocol for all four models if you want a directly comparable table.
 
-## 🚀 Quick Start
+## Run the web application
 
-### Prerequisites
-
-- **Python 3.10+** (tested on 3.11)
-- **Webcam** (built-in or USB)
-- ~2 GB disk space (TensorFlow)
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/devansh-tg/EmoteVision.git
-cd EmoteVision/src
-```
-
-### 2. Create a virtual environment (recommended)
-
-```bash
+```powershell
+cd web_app
 python -m venv .venv
-
-# Windows
 .venv\Scripts\activate
-
-# macOS / Linux
-source .venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 4. Run the web app
-
-```bash
 python app.py
 ```
 
-Open **http://127.0.0.1:5000** in your browser. The model takes ~60-80s to load on first run (TensorFlow initialization).
+Open `http://127.0.0.1:5000`.
 
----
+The application loads the production Custom CNN from
+`models/custom_cnn/model.h5` by default. Copy `web_app/.env.example` to
+`web_app/.env` to override model, camera, server, or TFLite settings.
 
-## 🧠 Model Details
+## Train the legacy Custom CNN
 
-| Property | Value |
-|----------|-------|
-| **Architecture** | Sequential CNN — 4 conv blocks + GlobalAveragePooling + 2 Dense layers |
-| **Input** | 48×48 grayscale face crop |
-| **Output** | 7-class softmax (Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise) |
-| **Parameters** | ~2.5M |
-| **Training Data** | FER-2013 (35,887 images) |
-| **Validation Accuracy** | ~68-70% (human agreement on FER-2013 is ~65-72%) |
-| **Optimizer** | Adam (lr=2e-4) |
-| **Regularization** | L2 (5e-4), Dropout (0.20–0.40), BatchNorm |
-| **Augmentation** | Rotation, shift, flip, zoom, brightness, channel shift |
+From the repository root:
 
-### Conv Block Structure
-```
-Conv2D → BatchNorm → Conv2D → BatchNorm → MaxPool → Dropout
-Filters: 64 → 128 → 256 → 512
+```powershell
+python training/custom_cnn/train.py `
+  --train-dir /kaggle/input/emotion-detection-dataset/train `
+  --val-dir /kaggle/input/emotion-detection-dataset/test `
+  --output-dir models/custom_cnn/runs/legacy_split `
+  --epochs 150 `
+  --batch-size 64
 ```
 
-### Training
+The script saves the final model, best checkpoint, metadata, confusion matrix,
+classification report, and training-history plot into the selected output
+folder.
 
-To retrain from scratch (requires dataset in `data/` folder):
+## Model research folders
 
-```bash
-python train.py --train-dir data/train --val-dir data/test --epochs 150 --batch-size 64
+The current repository contains preserved Custom CNN and EfficientNet-B0
+artifacts. ResNet50 and ConvNeXt-Small do not yet have trained checkpoints in
+this working tree. Their Kaggle training scripts/notebooks should be kept
+separate from the production application and should use the same legacy split
+if they are being compared with the existing results.
+
+## Testing
+
+```powershell
+pytest web_app/tests/ -v --tb=short
 ```
 
-**Output files:**
-- `model.h5` / `model_best.h5` — trained model
-- `model_meta.json` — accuracy metrics + metadata
-- `confusion_matrix.png` — per-class detection heatmap
-- `classification_report.txt` — precision / recall / F1
-- `training_history.png` — accuracy, loss, gap curves
+## Academic reporting notes
 
-### Export to TFLite (optional, for faster inference)
-
-```bash
-python export_tflite.py --input model.h5 --output model.tflite --quantize dynamic
-```
-
----
-
-## ⚙️ Configuration
-
-All settings are configurable via **environment variables** or the `.env` file. See [.env.example](src/.env.example) for the full list.
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `EMOTEVISION_MODEL` | `model.h5` | Path to Keras model |
-| `EMOTEVISION_TFLITE` | `model.tflite` | Path to TFLite model |
-| `EMOTEVISION_USE_TFLITE` | `auto` | `true`, `false`, or `auto` |
-| `EMOTEVISION_CAMERA` | `0` | Camera index |
-| `EMOTEVISION_HOST` | `0.0.0.0` | Server bind address |
-| `EMOTEVISION_PORT` | `5000` | Server port |
-| `EMOTEVISION_SMOOTHING` | `0.4` | EWA smoothing alpha (0=max smooth, 1=no smooth) |
-
----
-
-## 🧪 Testing
-
-```bash
-pytest tests/ -v --tb=short
-```
-
-Tests cover:
-- Detector initialization and model loading
-- Emotion prediction output format
-- Engagement score calculation
-- Configuration validation
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Backend** | Python 3.11, Flask 3.x, Flask-SocketIO 5.x |
-| **Deep Learning** | TensorFlow / Keras 2.x, custom CNN |
-| **Computer Vision** | OpenCV 4.x, Haar Cascade (default) or MediaPipe |
-| **Frontend** | Vanilla JS, CSS3 (custom properties, glassmorphism, keyframe animations) |
-| **Charts** | Chart.js 4.x (60-point sliding trend) |
-| **Real-Time** | Socket.IO 4.x (WebSocket transport) |
-| **Preprocessing** | CLAHE (adaptive contrast), EWA temporal smoothing |
-
----
-
-## 📊 Performance
-
-| Metric | Value |
-|--------|-------|
-| **Inference time** | ~15-40ms per frame (CPU) |
-| **FPS** | ~15-30 FPS |
-| **Model load** | ~60-80s (first run, TensorFlow CPU init) |
-| **Memory** | ~400-600 MB (TensorFlow + OpenCV) |
-| **WebSocket latency** | <50ms |
-
----
-
-## 📄 License
-
-This project is for educational purposes. The FER-2013 dataset is provided under its own license via Kaggle.
-
----
-
-<p align="center">
-  Built with ❤️ by <a href="https://github.com/devansh-tg">Devansh</a>
-</p>
+- Report the split and preprocessing beside every model metric.
+- Label results from `data/fer2013/test` as legacy validation results.
+- Do not describe estimated real-world accuracy as measured accuracy.
+- Preserve the production Custom CNN checkpoint while writing new runs under
+  `models/custom_cnn/runs/`.
+- Keep datasets, checkpoints, reports, and application code in their separate
+  feature folders.

@@ -1,0 +1,16 @@
+{
+  "val_accuracy": 0.6988018751144409,
+  "val_loss": 1.1297982931137085,
+  "timestamp": "2026-08-20T19:42:18.803886",
+  "class_names": [
+    "Angry",
+    "Disgust",
+    "Fear",
+    "Happy",
+    "Neutral",
+    "Sad",
+    "Surprise"
+  ],
+  "evaluation_split": "src/data/test",
+  "note": "Measured from the checked-in FER-style test split."
+}
