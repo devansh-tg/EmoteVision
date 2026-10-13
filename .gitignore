@@ -63,6 +63,7 @@ training_history.png
 # Local datasets can be very large. The legacy FER2013 copy is retained
 # locally for reproducibility but should not be added to future commits.
 data/fer2013/
+model/data/fer2013/
 
 # Model runs and generated reports.
 model/*/runs/
