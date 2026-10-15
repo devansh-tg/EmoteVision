@@ -27,7 +27,6 @@ web_app/                         # Production application and inference
 
 model/                           # Preserved checkpoints and research outputs
 |-- custom_cnn/                  # Production model used by the app
-|-- legacy_efficientnet_b0/      # Historical artifacts
 |-- efficientnet_b0/             # Frozen-backbone experiment
 |-- resnet/                      # Frozen-backbone experiment
 `-- convnext/                    # Frozen-backbone experiment
@@ -36,7 +35,6 @@ training/                        # Reproducible training entry points
 |-- common.py                    # Shared repository training helpers
 |-- run_all_feature_extraction.py # Standalone Kaggle runner
 |-- custom_cnn/train.py          # Custom CNN baseline
-|-- legacy_efficientnet_b0/train.py
 |-- efficientnet_b0/train.py
 |-- resnet/train.py
 `-- convnext/train.py
@@ -174,13 +172,6 @@ display(FileLink("/kaggle/working/emotevision_outputs.zip"))
 ```powershell
 pytest web_app/tests/ -v --tb=short
 ```
-
-## Historical compatibility
-
-`training/legacy_efficientnet_b0/train.py` is retained as a historical
-training implementation. It is separate from the frozen-backbone comparison
-runner and should not be used to interpret the recovered comparison metrics.
-The historical outputs are preserved in `model/legacy_efficientnet_b0/`.
 
 ## Academic reporting
 
